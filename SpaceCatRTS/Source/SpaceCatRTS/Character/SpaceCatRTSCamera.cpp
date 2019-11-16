@@ -50,13 +50,13 @@ void ASpaceCatRTSCamera::BeginPlay()
 	LevelSettings = Cast< ALevelSettings>(GetWorld()->GetWorldSettings());
 	if (!LevelSettings)
 	{
-		UE_LOG(LogTemp, Log, TEXT("failed to cast GetWorldSettings() to ALevelSettings"));
+		UE_LOG(LogTemp, Error, TEXT("failed to cast GetWorldSettings() to ALevelSettings"));
 	}
 
 	PlayerController = Cast<ASpaceCatRTSPlayerController>(GetController());
 	if (!PlayerController)
 	{
-		UE_LOG(LogTemp, Log, TEXT("failed to cast GetController() to ASpaceCatRTSPlayerController"));
+		UE_LOG(LogTemp, Error, TEXT("failed to cast GetController() to ASpaceCatRTSPlayerController"));
 	}
 }
 

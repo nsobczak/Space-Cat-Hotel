@@ -24,4 +24,8 @@ public:
 		float yMin = -1500.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level limit")
 		float yMax = 1500.f;
+
+	/**In seconds*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level timer")
+		float LevelTimeLimit = 600.f;
 };
