@@ -16,6 +16,9 @@ public:
 
 	int32 bMoveCameraXAxis = 0, bMoveCameraYAxis = 0;
 
+	UFUNCTION(BlueprintPure, Category = "Selection")
+		FORCEINLINE ASpaceCatRTSSelectable* GetSelectedActor() { return SelectedActor; };
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -25,7 +28,7 @@ protected:
 	virtual void SetupInputComponent() override;
 	// End PlayerController interface
 
-	APawn* SelectedPawn;
+	ASpaceCatRTSSelectable* SelectedActor;
 
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();

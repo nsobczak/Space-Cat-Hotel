@@ -1,6 +1,6 @@
 #include "SpaceCatRTSGameMode.h"
 #include "PlayerController/SpaceCatRTSPlayerController.h"
-#include "Character/SpaceCatRTSCharacter.h"
+//#include "Character/SpaceCatRTSWorker.h"
 #include "UObject/ConstructorHelpers.h"
 
 ASpaceCatRTSGameMode::ASpaceCatRTSGameMode()
@@ -9,7 +9,7 @@ ASpaceCatRTSGameMode::ASpaceCatRTSGameMode()
 	PlayerControllerClass = ASpaceCatRTSPlayerController::StaticClass();
 
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDownCPP/Blueprints/TopDownCharacter"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/PlayerController/BPCamera"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;

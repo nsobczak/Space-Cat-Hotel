@@ -1,9 +1,7 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
 #include "SpaceCatRTSPlayerController.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "Character/SpaceCatRTSCharacter.h"
+#include "Character/SpaceCatRTSSelectable.h"
 #include "Engine/World.h"
 #include "Engine/GameViewportClient.h"
 
@@ -84,15 +82,15 @@ void ASpaceCatRTSPlayerController::MoveToTouchLocation(const ETouchIndex::Type F
 
 void ASpaceCatRTSPlayerController::SetNewMoveDestination(const FVector DestLocation)
 {
-	//APawn* const MyPawn = GetPawn();
-	if (SelectedPawn)
+	if (SelectedActor && SelectedActor->SNature == ESelectableNature::FSN_WORKER)
 	{
-		float const Distance = FVector::Dist(DestLocation, SelectedPawn->GetActorLocation());
+		float const Distance = FVector::Dist(DestLocation, SelectedActor->GetActorLocation());
 
 		// We need to issue move command only if far enough in order for walk animation to play correctly
 		if ((Distance > 120.0f))
 		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedPawn->GetController(), DestLocation);
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedActor->GetController(), DestLocation);
+			//UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
 		}
 	}
 }
@@ -112,9 +110,9 @@ void ASpaceCatRTSPlayerController::OnSetDestinationReleased()
 void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 {
 	// We click, unposses current
-	if (SelectedPawn)
+	if (SelectedActor)
 	{
-		SelectedPawn = nullptr;
+		SelectedActor = nullptr;
 	}
 
 	// Trace to see what is under the mouse cursor
@@ -123,11 +121,12 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 
 	if (Hit.bBlockingHit)
 	{
-		//UE_LOG(LogTemp, Log, TEXT("We hit something, unposses current"));
-		if (APawn* const NewPawn = Cast<APawn>(Hit.GetActor()))
+		if (ASpaceCatRTSSelectable* const NewActor = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
 		{
-			SelectedPawn = NewPawn;
+			UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
+			SelectedActor = NewActor;
 		}
+
 	}
 }
 
