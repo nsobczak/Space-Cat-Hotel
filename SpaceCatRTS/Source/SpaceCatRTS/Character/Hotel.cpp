@@ -4,6 +4,8 @@ int32 AHotel::HotelCount = 0;
 
 AHotel::AHotel()
 {
+	FNature = EFacilityNature::FFN_HOTEL;
+
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;

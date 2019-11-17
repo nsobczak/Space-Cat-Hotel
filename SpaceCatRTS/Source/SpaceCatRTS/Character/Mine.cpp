@@ -4,6 +4,8 @@ int32 AMine::MineCount = 0;
 
 AMine::AMine()
 {
+	FNature = EFacilityNature::FFN_MINE;
+
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;

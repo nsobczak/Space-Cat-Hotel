@@ -1,10 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Character/Facility.h"
 #include "Hotel.generated.h"
+
+UENUM(BlueprintType)
+enum class EHotelNature : uint8
+{
+	FHN_PURPLE_CONE UMETA(DisplayName = "Purple cone"),
+	FHN_YELLOW_CUBE UMETA(DisplayName = "Yellow cube"),
+	FHN_RED_CYLINDER UMETA(DisplayName = "Red cylinder")
+};
 
 /**
  *
@@ -27,8 +33,8 @@ public:
 
 	static void ResetHotelCount() { HotelCount = 0; }
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mine")
-//	EMineNature MNature;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
+		EHotelNature HNature;
 
 	UFUNCTION(BlueprintPure, Category = "Action")
 		FORCEINLINE int32 GetRoomCount() { return RoomCount; }

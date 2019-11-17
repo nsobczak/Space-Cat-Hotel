@@ -25,6 +25,7 @@ void AEarth::Tick(float DeltaSeconds)
 
 AHarvester* AEarth::SpawnHarvester()
 {
+	//TODO: check oxygen value + max harvester count value
 	if (BPHarvester)
 	{
 		FVector NewLocation = GetActorLocation() + FVector(0.f, 500.f, 100.f);
@@ -41,7 +42,7 @@ AHarvester* AEarth::SpawnHarvester()
 
 AEngineer* AEarth::SpawnEngineer()
 {
-	//TODO: check oxygen value
+	//TODO: check oxygen value + max engineer count value
 	if (BPEngineer)
 	{
 		FVector NewLocation = GetActorLocation() + FVector(0.f, 500.f, 100.f);
