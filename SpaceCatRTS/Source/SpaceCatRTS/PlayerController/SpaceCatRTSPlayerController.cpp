@@ -123,7 +123,7 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 	{
 		if (ASpaceCatRTSSelectable* const NewActor = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
 		{
-			UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
+			//UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
 			SelectedActor = NewActor;
 		}
 

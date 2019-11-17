@@ -8,7 +8,8 @@ UENUM(BlueprintType)
 enum class EFacilityNature : uint8
 {
 	FFN_MINE UMETA(DisplayName = "Mine"),
-	FFN_HOTEL UMETA(DisplayName = "Hotel")
+	FFN_HOTEL UMETA(DisplayName = "Hotel"),
+	FFN_EARTH UMETA(DisplayName = "Earth")
 };
 
 /**
@@ -25,10 +26,12 @@ public:
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Facility")
+		EFacilityNature FNature;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Worker, meta = (AllowPrivateAccess = "true"))
-		EFacilityNature FNature;
+
 };

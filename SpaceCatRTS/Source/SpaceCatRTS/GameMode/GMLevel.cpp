@@ -1,6 +1,8 @@
 #include "GMLevel.h"
 #include "PlayerController/SpaceCatRTSPlayerController.h"
 #include "Character/SpaceCatRTSCamera.h"
+#include "Character/Hotel.h"
+#include "Character/Mine.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
 #include "WorldSettings/LevelSettings.h"
@@ -34,6 +36,10 @@ void AGMLevel::SetupGame()
 	else
 	{
 		GameTimer = LevelSettings->LevelInfo.LevelTimeLimit;
+
+		Oxygen = 0;
+		AHotel::ResetHotelCount();
+		AMine::ResetMineCount();
 	}
 }
 

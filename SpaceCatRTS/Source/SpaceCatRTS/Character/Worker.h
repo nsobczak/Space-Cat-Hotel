@@ -25,7 +25,7 @@ public:
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Worker", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Worker", meta = (AllowPrivateAccess = "true"))
 		EWorkerNature WNature;
 
 protected:
