@@ -6,6 +6,7 @@
 AEarth::AEarth()
 {
 	FNature = EFacilityNature::FFN_EARTH;
+	DistToBeSeenInside = 500.f;
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;

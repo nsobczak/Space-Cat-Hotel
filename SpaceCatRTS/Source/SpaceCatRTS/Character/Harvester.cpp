@@ -88,7 +88,14 @@ void AHarvester::WorkAtMine()
 			//if at earth
 			if (FVector::DistSquared(GetActorLocation(), Earth->GetActorLocation()) < Earth->GetSqDistToBeSeenInside())
 			{
-				PC->AddOxygenVal(ResourceAmount);
+				if (TargetMine->GetMineNature() == EMineNature::FMN_OXYGEN)
+				{
+					PC->AddOxygenVal(ResourceAmount);
+				}
+				else
+				{
+					PC->AddRawMatVal(ResourceAmount);
+				}
 				ResourceAmount = 0;
 			}
 		}

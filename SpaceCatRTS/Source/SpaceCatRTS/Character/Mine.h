@@ -6,12 +6,12 @@
 #include "Character/Facility.h"
 #include "Mine.generated.h"
 
-//UENUM(BlueprintType)
-//enum class EMineNature : uint8
-//{
-//	FMN_OXYGEN UMETA(DisplayName = "Oxygen"),
-//	FMN_BRICK UMETA(DisplayName = "d")
-//};
+UENUM(BlueprintType)
+enum class EMineNature : uint8
+{
+	FMN_OXYGEN UMETA(DisplayName = "Oxygen"),
+	FMN_RAW UMETA(DisplayName = "Raw materials")
+};
 
 /**
  *
@@ -32,8 +32,8 @@ public:
 
 	static void ResetMineCount() { MineCount = 0; }
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mine")
-	//	EMineNature MNature;
+	UFUNCTION(BlueprintPure, Category = "Mine")
+		FORCEINLINE EMineNature GetMineNature() { return MNature; }
 
 	UFUNCTION(BlueprintPure, Category = "Mine")
 		FORCEINLINE int32 GetResourceAmountPerHarvest() { return ResourceAmountPerHarvest; }
@@ -47,6 +47,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	static int32 MineCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
+		EMineNature MNature;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
 		int32 ResourceAmountPerHarvest = 10;

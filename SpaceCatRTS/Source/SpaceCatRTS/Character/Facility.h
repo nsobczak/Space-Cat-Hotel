@@ -26,7 +26,7 @@ public:
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Facility")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Facility")
 		EFacilityNature FNature;
 
 	UFUNCTION(BlueprintPure, Category = "Facility")
