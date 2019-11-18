@@ -24,12 +24,20 @@ public:
 
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Worker", meta = (AllowPrivateAccess = "true"))
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Worker")
 		EWorkerNature WNature;
+
+	UFUNCTION(BlueprintCallable, Category = "Worker")
+		virtual void DoNothing();
+
+	UFUNCTION(BlueprintPure, Category = "Worker")
+		FORCEINLINE bool GetIsBuilding() { return bIsBuilding; }
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	bool bIsBuilding = false;
 
 };

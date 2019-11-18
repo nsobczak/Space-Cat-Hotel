@@ -14,13 +14,13 @@
 //};
 
 /**
- * 
+ *
  */
 UCLASS()
 class SPACECATRTS_API AMine : public AFacility
 {
 	GENERATED_BODY()
-	
+
 public:
 	AMine();
 
@@ -35,10 +35,21 @@ public:
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mine")
 	//	EMineNature MNature;
 
+	UFUNCTION(BlueprintPure, Category = "Mine")
+		FORCEINLINE int32 GetResourceAmountPerHarvest() { return ResourceAmountPerHarvest; }
+
+	UFUNCTION(BlueprintPure, Category = "Mine")
+		FORCEINLINE float GetTimeToHarvest() { return TimeToHarvest; };
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	static int32 MineCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
+		int32 ResourceAmountPerHarvest = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
+		float TimeToHarvest = 5.f;
 };

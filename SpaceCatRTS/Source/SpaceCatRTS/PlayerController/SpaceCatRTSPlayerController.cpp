@@ -2,10 +2,16 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "Character/SpaceCatRTSSelectable.h"
+#include "Character/Facility.h"
+#include "Character/Mine.h"
+#include "Character/Hotel.h"
+#include "Character/Harvester.h"
+#include "Character/Engineer.h"
 #include "Engine/World.h"
 #include "Engine/GameViewportClient.h"
 
-#define ECC_Clickable ECC_GameTraceChannel1
+#define ECC_ClickableLeft ECC_GameTraceChannel1
+#define ECC_ClickableRight ECC_GameTraceChannel2
 
 ASpaceCatRTSPlayerController::ASpaceCatRTSPlayerController()
 {
@@ -90,15 +96,58 @@ void ASpaceCatRTSPlayerController::SetNewMoveDestination(const FVector DestLocat
 		if ((Distance > 120.0f))
 		{
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedActor->GetController(), DestLocation);
-			//UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
+			if (DEBUG) UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
 		}
 	}
 }
 
 void ASpaceCatRTSPlayerController::OnSetDestinationPressed()
 {
-	// set flag to keep updating destination until released
-	bMoveToMouseCursor = true;
+	if (SelectedActor)
+	{
+		// set flag to keep updating destination until released
+		bMoveToMouseCursor = true;
+
+		// Trace to see what is under the mouse cursor
+		FHitResult Hit;
+		GetHitResultUnderCursor(ECC_ClickableRight, false, Hit);
+
+		AHarvester* const selectedHarvester = Cast<AHarvester>(SelectedActor);
+		AEngineer* const selectedEngineer = Cast<AEngineer>(SelectedActor);
+
+		if (Hit.bBlockingHit)
+		{
+			AMine* const newMine = Cast<AMine>(Hit.GetActor());
+			AHotel* const newHotel = Cast<AHotel>(Hit.GetActor());
+			if (AFacility* const newFacility = Cast<AFacility>(Hit.GetActor()))
+			{
+				if (DEBUG) UE_LOG(LogTemp, Log, TEXT("We right clicked on a facility"));
+				if (newMine && selectedHarvester)
+				{
+					if (DEBUG) UE_LOG(LogTemp, Log, TEXT("Right clicked facility is a mine"));
+					selectedHarvester->AssignMineToHarvest(newMine);
+				}
+				if (newHotel && selectedEngineer)
+				{
+					if (DEBUG) UE_LOG(LogTemp, Log, TEXT("Right clicked facility is a mine"));
+					selectedEngineer->AssignHotelToWork(newHotel);
+				}
+			}
+		}
+		else
+		{
+			//reset selected pawn
+			if (selectedHarvester)
+			{
+				selectedHarvester->DoNothing();
+			}
+			if (selectedEngineer)
+			{
+				selectedEngineer->DoNothing();
+			}
+		}
+	}
+
 }
 
 void ASpaceCatRTSPlayerController::OnSetDestinationReleased()
@@ -117,14 +166,14 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 
 	// Trace to see what is under the mouse cursor
 	FHitResult Hit;
-	GetHitResultUnderCursor(ECC_Clickable, false, Hit);
+	GetHitResultUnderCursor(ECC_ClickableLeft, false, Hit);
 
 	if (Hit.bBlockingHit)
 	{
-		if (ASpaceCatRTSSelectable* const NewActor = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
+		if (ASpaceCatRTSSelectable* const newActor = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
 		{
-			//UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
-			SelectedActor = NewActor;
+			if (DEBUG) UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
+			SelectedActor = newActor;
 		}
 
 	}

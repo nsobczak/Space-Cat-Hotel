@@ -1,5 +1,3 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -19,7 +17,24 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Selection")
 		FORCEINLINE ASpaceCatRTSSelectable* GetSelectedActor() { return SelectedActor; };
 
+	UFUNCTION(BlueprintPure, Category = "Resources")
+		FORCEINLINE int32 GetOxygenVal() { return Oxygen; };
+	UFUNCTION(BlueprintCallable, Category = "Resources")
+		void SetOxygenVal(int32 val) { Oxygen = val; };
+	UFUNCTION(BlueprintCallable, Category = "Resources")
+		void AddOxygenVal(int32 val) { Oxygen += val; };
+
+	UFUNCTION(BlueprintPure, Category = "Resources")
+		FORCEINLINE int32 GetRawMatVal() { return RawMat; };
+	UFUNCTION(BlueprintCallable, Category = "Resources")
+		void SetRawMatVal(int32 val) { RawMat = val; };
+	UFUNCTION(BlueprintCallable, Category = "Resources")
+		void AddRawMatVal(int32 val) { RawMat += val; };
+
 protected:
+	UPROPERTY(EditAnywhere, Category = "Debug")
+		bool DEBUG = false;
+
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
 
@@ -46,6 +61,12 @@ protected:
 	/** Input handlers for PawnSelection action. */
 	void OnSelectPawnPressed();
 	void OnSelectPawnReleased();
+
+
+	UPROPERTY(VisibleAnywhere, Category = "Resources")
+		int32 Oxygen;
+	UPROPERTY(VisibleAnywhere, Category = "Resources")
+		int32 RawMat;
 };
 
 

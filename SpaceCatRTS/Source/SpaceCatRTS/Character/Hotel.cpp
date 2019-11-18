@@ -16,6 +16,8 @@ void AHotel::BeginPlay()
 	Super::BeginPlay();
 
 	AHotel::HotelCount++;
+	RoomCount = 1;
+	UpdateNeededEngineerCount();
 }
 
 void AHotel::Destroyed()
@@ -28,3 +30,27 @@ void AHotel::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
+void AHotel::UpdateNeededEngineerCount()
+{
+	NeededEngineerCount = 1 + RoomCount / NumberOfRoomPerEngineer;
+}
+
+bool AHotel::AssignRoomToClient()
+{
+	//TODO: addapt with goal class
+	if (GetFreeRoomCount() > 0 && CurrentEngineerCount >= 1 + (ClientCount + 1) / NumberOfRoomPerEngineer)
+	{
+		ClientCount++;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void AHotel::AddRoom(int32 val)
+{
+	RoomCount += val;
+	UpdateNeededEngineerCount();
+}

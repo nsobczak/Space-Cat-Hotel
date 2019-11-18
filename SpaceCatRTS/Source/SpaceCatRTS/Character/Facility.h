@@ -29,9 +29,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Facility")
 		EFacilityNature FNature;
 
+	UFUNCTION(BlueprintPure, Category = "Facility")
+		FORCEINLINE float GetDistToBeSeenInside() { return DistToBeSeenInside; };
+	UFUNCTION(BlueprintPure, Category = "Facility")
+		FORCEINLINE float GetSqDistToBeSeenInside() { return DistToBeSeenInside * DistToBeSeenInside; };
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Facility")
+		float DistToBeSeenInside = 500.f;
 };

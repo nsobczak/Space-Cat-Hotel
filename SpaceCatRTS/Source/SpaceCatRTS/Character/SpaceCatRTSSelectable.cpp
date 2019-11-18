@@ -5,8 +5,10 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "PlayerController/SpaceCatRTSPlayerController.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "Engine/Classes/Kismet/GameplayStatics.h"
 
 ASpaceCatRTSSelectable::ASpaceCatRTSSelectable()
 {
@@ -42,6 +44,18 @@ ASpaceCatRTSSelectable::ASpaceCatRTSSelectable()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 }
+
+void ASpaceCatRTSSelectable::BeginPlay()
+{
+	Super::BeginPlay();
+
+	PC = Cast<ASpaceCatRTSPlayerController>( UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (!PC)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ASpaceCatRTSSelectable failed to get and cast GetPlayerController in Begin function"));
+	}
+}
+
 
 void ASpaceCatRTSSelectable::Tick(float DeltaSeconds)
 {

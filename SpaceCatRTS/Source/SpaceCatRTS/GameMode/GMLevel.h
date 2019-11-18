@@ -35,8 +35,5 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Timer")
 		float GameTimer;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Resources")
-		int32 Oxygen;
-
 	virtual void GameOver();
 };

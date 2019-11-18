@@ -28,16 +28,34 @@ public:
 
 	virtual void  Destroyed() override;
 
-	UFUNCTION(BlueprintPure, Category = "Room")
+	UFUNCTION(BlueprintPure, Category = "Hotel")
 		FORCEINLINE int32 GetHotelCount() { return HotelCount; }
 
 	static void ResetHotelCount() { HotelCount = 0; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Hotel")
 		EHotelNature HNature;
 
-	UFUNCTION(BlueprintPure, Category = "Action")
+	UFUNCTION(BlueprintPure, Category = "Hotel")
+		FORCEINLINE int32 GetNeedeedEngineerCount() { return NeededEngineerCount; }
+
+	UFUNCTION(BlueprintPure, Category = "Hotel")
+		FORCEINLINE int32 GetCurrentEngineerCount() { return CurrentEngineerCount; }
+	UFUNCTION(BlueprintCallable, Category = "Hotel")
+		void AddEngineer(int32 val = 1) { CurrentEngineerCount += val; }
+
+	UFUNCTION(BlueprintPure, Category = "HotelRoom")
 		FORCEINLINE int32 GetRoomCount() { return RoomCount; }
+	UFUNCTION(BlueprintCallable, Category = "HotelRoom")
+		void AddRoom(int32 val = 1);
+
+	UFUNCTION(BlueprintPure, Category = "Hotel")
+		FORCEINLINE int32 GetClientCount() { return ClientCount; }
+	UFUNCTION(BlueprintPure, Category = "Hotel")
+		FORCEINLINE int32 GetFreeRoomCount() { return RoomCount - ClientCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "Hotel")
+		bool AssignRoomToClient();
 
 protected:
 	// Called when the game starts or when spawned
@@ -45,6 +63,17 @@ protected:
 
 	static int32 HotelCount;
 
+	UPROPERTY(VisibleAnywhere, Category = "Hotel")
+		int32 NeededEngineerCount;
+	UPROPERTY(EditAnywhere, Category = "Hotel")
+		int32 NumberOfRoomPerEngineer = 2;
+	void UpdateNeededEngineerCount();
+
+	UPROPERTY(VisibleAnywhere, Category = "Hotel")
+		int32 CurrentEngineerCount;
+
 	UPROPERTY(VisibleAnywhere, Category = "Room")
-		int32 RoomCount;
+		int32 RoomCount = 1;
+	UPROPERTY(VisibleAnywhere, Category = "Room")
+		int32 ClientCount;
 };

@@ -6,6 +6,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
 #include "WorldSettings/LevelSettings.h"
+#include "Engine/Classes/Kismet/GameplayStatics.h"
 
 
 AGMLevel::AGMLevel()
@@ -37,7 +38,17 @@ void AGMLevel::SetupGame()
 	{
 		GameTimer = LevelSettings->LevelInfo.LevelTimeLimit;
 
-		Oxygen = 0;
+
+		ASpaceCatRTSPlayerController* pc = Cast<ASpaceCatRTSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+		if (pc)
+		{
+			pc->SetOxygenVal(0);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("gamemode begin failed to cast GetPlayerController to ASpaceCatRTSPlayerController"));
+		}
+
 		AHotel::ResetHotelCount();
 		AMine::ResetMineCount();
 	}
