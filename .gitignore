@@ -7,8 +7,7 @@ SpaceCatRTS/Build/
 /Build/
 *.sln
 
-ProjectMonitoring/Timeline/\.idea/
-
+*.kra~
+*.png~
 *.uml~
-
 *.blend1

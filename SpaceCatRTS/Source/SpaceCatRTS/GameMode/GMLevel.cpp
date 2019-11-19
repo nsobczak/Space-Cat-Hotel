@@ -29,7 +29,7 @@ AGMLevel::AGMLevel()
 void AGMLevel::SetupGame()
 {
 
-	ALevelSettings* LevelSettings = Cast< ALevelSettings>(GetWorld()->GetWorldSettings());
+	LevelSettings = Cast< ALevelSettings>(GetWorld()->GetWorldSettings());
 	if (!LevelSettings)
 	{
 		UE_LOG(LogTemp, Error, TEXT("failed to cast GetWorldSettings() to ALevelSettings"));
@@ -71,10 +71,34 @@ void AGMLevel::Tick(float DeltaTime)
 	{
 		GameOver();
 	}
+	else
+	{
+		HandleGoals();
+	}
 }
+
+
 
 void AGMLevel::GameOver()
 {
 	UE_LOG(LogTemp, Log, TEXT("Game Over"));
 
+}
+
+void AGMLevel::HandleGoals()
+{
+	for (size_t i = 0; i < LevelSettings->Goals.Num(); ++i)
+	{
+		if (LevelSettings->Goals[i].IsHidden())
+		{
+			if (GameTimer < LevelSettings->Goals[i].TimeLeftWhenGoalAppears)
+			{
+				LevelSettings->Goals[i].SetActive();
+			}
+		}
+		else if (LevelSettings->Goals[i].IsActive())
+		{
+			//TODO: check for completion
+		}
+	}
 }

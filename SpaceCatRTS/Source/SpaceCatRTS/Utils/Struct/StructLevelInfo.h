@@ -13,13 +13,16 @@ struct FStructLevelInfo
 	GENERATED_USTRUCT_BODY()
 
 public:
-	FStructLevelInfo();
-	FStructLevelInfo(float newXMin, float newXMax, float newYMin, float newYMax);
+	FStructLevelInfo() {}
+	FStructLevelInfo(float newXMin, float newXMax, float newYMin, float newYMax) :
+		xMin(newXMin), xMax(newXMax), yMin(newYMin), yMax(newYMax)
+	{
+	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level limit")
-		float xMin = -1800.f ;
+		float xMin = -1800.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level limit")
-		float xMax = 1200.f ;
+		float xMax = 1200.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level limit")
 		float yMin = -1500.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level limit")
@@ -27,5 +30,5 @@ public:
 
 	/**In seconds*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level timer")
-		float LevelTimeLimit = 600.f;
+		float LevelTimeLimit = 300.f;
 };

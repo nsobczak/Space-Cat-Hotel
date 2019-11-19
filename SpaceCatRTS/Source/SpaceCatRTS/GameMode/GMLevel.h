@@ -32,8 +32,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	class ALevelSettings* LevelSettings;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Timer")
 		float GameTimer;
 
 	virtual void GameOver();
+
+	virtual void HandleGoals();
 };

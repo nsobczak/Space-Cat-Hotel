@@ -4,20 +4,26 @@ Goal: attract as much tourists as possible down to earth.
 
 - you are a space cat
 - you run an interplanetary hotel company
-- you must recruit space cat employees (worker)
-- you must build building that can answer to extraterrestrial needs of clients
-- when clients arrive you must move them to their room: assign a room and they move to it if it answers its needs and if it's empty, otherwise client keeps on waiting (and leaving if it's too long?)
+- you must recruit space cat employees (worker: harvester or engineer)
+- harvester can gather resources
+- engineers can construct building that can answer extraterrestrial needs of clients
+- when clients arrive you must move them to their room: assign a room and they move to it if it answers its needs and if it's empty, otherwise client keeps on waiting, and leaving if it's too long.
+- if client are satisfied with your company they might come down to earth
 
 ## Resources
 
-- squares from earth
+Type:
+- oxygen
+- raw materials
+
+They are gathered to Earth by harvesters.
 
 ## Actors
 
-- Earth => workers
-- Facility hotel => rooms
+- Earth => produces workers
+- Facility hotel => produces rooms
 - Resources => are unlimited
-- Facility mine (color and shape) => worker gather resources in the mine
+- Facility mine (color and shape) => harvesters gather resources in the mine
 - Harvester worker => can harvest resources (go back an forth from resource to mine, resources are unlimited)
 - Engineer worker => must gather resources on target planet and build hotel (worker then work at the hotel, can't be used anymore)
 - Goal => Animal, time (visual like a color in overcooked), amount of resources needed
