@@ -18,7 +18,7 @@ AGMLevel::AGMLevel()
 	PlayerControllerClass = ASpaceCatRTSPlayerController::StaticClass();
 
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/PlayerController/BPCamera"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/BPCamera"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
@@ -43,6 +43,9 @@ void AGMLevel::SetupGame()
 		if (pc)
 		{
 			pc->SetOxygenVal(0);
+			pc->SetRawMatVal(0);
+
+			pc->SetInputMode(FInputModeGameAndUI().SetHideCursorDuringCapture(false));
 		}
 		else
 		{
@@ -75,7 +78,3 @@ void AGMLevel::GameOver()
 	UE_LOG(LogTemp, Log, TEXT("Game Over"));
 
 }
-
-float AGMLevel::GetCurrentGameTimer() { return GameTimer; }
-int32 AGMLevel::GetCurrentGameTimerMinutes() { return (int32)GameTimer / 60; }
-int32 AGMLevel::GetCurrentGameTimerSeconds() { return (int32)GameTimer % 60; }

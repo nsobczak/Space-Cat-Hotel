@@ -75,11 +75,15 @@ protected:
 
 #pragma region Widgets
 	/** The widget class we will use as our menu when the game starts. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
 		EHudWidget WidgetToShow = EHudWidget::FHW_NONE;
 
+	/** */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
+		TSubclassOf<UUserWidget> CursorWidgetClass;
+
 	/** The widget class we will use as our menu when the game starts. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
 		TSubclassOf<UUserWidget> StartingWidgetClass;
 
 	/**widget to use for our HUD screen*/
@@ -87,11 +91,11 @@ protected:
 		TSubclassOf<UUserWidget> HUDWidget;
 
 	/** The widget class we will use as our menu when the game is paused. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
 		TSubclassOf<UUserWidget> PauseWidgetClass;
 
 	/** The widget class we will use as our menu when the game end. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
 		TSubclassOf<UUserWidget> EndingWidgetClass;
 
 	/** The widget instance that we are using as our menu. */

@@ -31,7 +31,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Resources")
 		void AddRawMatVal(int32 val) { RawMat += val; };
 
+	void SetMouseCursorWidget(TSubclassOf<UUserWidget> NewWidgetClass);
+
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, Category = "Debug")
 		bool DEBUG = false;
 
@@ -44,6 +49,10 @@ protected:
 	// End PlayerController interface
 
 	ASpaceCatRTSSelectable* SelectedActor;
+
+	/**widget to use for our HUD screen*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MouseInterface")
+		TSubclassOf<UUserWidget> MouseCursorWidgetClass;
 
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();
@@ -67,6 +76,10 @@ protected:
 		int32 Oxygen;
 	UPROPERTY(VisibleAnywhere, Category = "Resources")
 		int32 RawMat;
+
+private:
+	/** The widget instance that we are using as our mouse cursor. */
+	UUserWidget* MouseCursorWidget;
 };
 
 

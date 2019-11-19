@@ -1,7 +1,11 @@
 #include "SpaceCatRTSPlayerController.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "Runtime/Engine/Classes/Components/DecalComponent.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Components/DecalComponent.h"
+#include "Materials/Material.h"
+#include "Engine/Classes/Kismet/GameplayStatics.h"
 #include "Character/SpaceCatRTSSelectable.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+
 #include "Character/Facility.h"
 #include "Character/Mine.h"
 #include "Character/Hotel.h"
@@ -9,15 +13,38 @@
 #include "Character/Engineer.h"
 #include "Engine/World.h"
 #include "Engine/GameViewportClient.h"
+#include "UMG/Public/UMG.h"
+
+
 
 #define ECC_ClickableLeft ECC_GameTraceChannel1
 #define ECC_ClickableRight ECC_GameTraceChannel2
 
 ASpaceCatRTSPlayerController::ASpaceCatRTSPlayerController()
 {
-	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	bShowMouseCursor = false;
+	DefaultMouseCursor = EMouseCursor::None;
 }
+
+void ASpaceCatRTSPlayerController::SetMouseCursorWidget(TSubclassOf<UUserWidget> NewWidgetClass)
+{
+	if (NewWidgetClass != nullptr)
+	{
+		MouseCursorWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
+		if (MouseCursorWidget != nullptr)
+		{
+			MouseCursorWidget->AddToViewport();
+		}
+	}
+}
+
+void ASpaceCatRTSPlayerController::BeginPlay()
+{
+	SetInputMode(FInputModeGameAndUI().SetHideCursorDuringCapture(false));
+
+	SetMouseCursorWidget(MouseCursorWidgetClass);
+}
+
 
 void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 {
@@ -29,18 +56,24 @@ void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 		MoveToMouseCursor();
 	}
 
+	//Camera + mouse cursor
 	float LocationX, LocationY;
 	GetMousePosition(LocationX, LocationY);
 	//UE_LOG(LogTemp, Log, TEXT("MousePos: X = %f | Y = %f"), LocationX, LocationY);
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	//UE_LOG(LogTemp, Log, TEXT("ViewportSize: X = %f | Y = %f"), ViewportSizeX, ViewportSizeY);
-
 	float xPercentage = LocationX / ViewportSizeX;
 	float yPercentage = LocationY / ViewportSizeY;
 	bMoveCameraXAxis = xPercentage < 0.04 ? -1 : xPercentage > 0.96 ? 1 : 0;
 	bMoveCameraYAxis = yPercentage < 0.04 ? 1 : yPercentage > 0.96 ? -1 : 0;
+
+	if (MouseCursorWidget)
+	{
+		MouseCursorWidget->SetPositionInViewport(FVector2D(LocationX, LocationY));
+	}
 }
+
 
 void ASpaceCatRTSPlayerController::SetupInputComponent()
 {
@@ -96,7 +129,7 @@ void ASpaceCatRTSPlayerController::SetNewMoveDestination(const FVector DestLocat
 		if ((Distance > 120.0f))
 		{
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedActor->GetController(), DestLocation);
-			if (DEBUG) UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
+			if (DEBUG) 	UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
 		}
 	}
 }

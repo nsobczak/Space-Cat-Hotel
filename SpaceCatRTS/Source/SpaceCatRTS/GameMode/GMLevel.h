@@ -22,11 +22,11 @@ public:
 		virtual void SetupGame();
 
 	UFUNCTION(BlueprintPure, Category = "GameTimer")
-		FORCEINLINE float GetCurrentGameTimer();
+		FORCEINLINE float GetCurrentGameTimer() { return GameTimer; }
 	UFUNCTION(BlueprintPure, Category = "GameTimer")
-		FORCEINLINE int32 GetCurrentGameTimerMinutes();
+		FORCEINLINE int32 GetCurrentGameTimerMinutes() { return (int32)GameTimer / 60; }
 	UFUNCTION(BlueprintPure, Category = "GameTimer")
-		FORCEINLINE int32 GetCurrentGameTimerSeconds();
+		FORCEINLINE int32 GetCurrentGameTimerSeconds() { return (int32)GameTimer % 60; }
 
 protected:
 	// Called when the game starts or when spawned

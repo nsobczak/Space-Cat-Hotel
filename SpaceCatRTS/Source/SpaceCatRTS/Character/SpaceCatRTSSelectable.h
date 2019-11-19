@@ -23,9 +23,6 @@ public:
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
-	/** Returns CursorToWorld subobject **/
-	FORCEINLINE class UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selectable", meta = (AllowPrivateAccess = "true"))
 		ESelectableNature SNature;
 
@@ -37,10 +34,6 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	/** A decal that projects to the cursor location. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class UDecalComponent* CursorToWorld;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Selectable")
 		class ASpaceCatRTSPlayerController* PC;

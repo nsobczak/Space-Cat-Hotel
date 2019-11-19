@@ -133,17 +133,17 @@ void AHUDMain::ShowWidget(TSubclassOf<UUserWidget> NewWidgetClass, bool showCurs
 
 void AHUDMain::ShowStartingWidget()
 {
-	ChangeMenuWidget(StartingWidgetClass, true);
+	ChangeMenuWidget(StartingWidgetClass, false);
 }
 
 void AHUDMain::ShowEndingWidget()
 {
-	ChangeMenuWidget(EndingWidgetClass, true);
+	ChangeMenuWidget(EndingWidgetClass, false);
 }
 
 void AHUDMain::ShowPauseWidget()
 {
-	ChangeMenuWidget(PauseWidgetClass, true);
+	ChangeMenuWidget(PauseWidgetClass, false);
 }
 
 void AHUDMain::ShowHUDWidget()
