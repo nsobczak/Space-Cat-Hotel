@@ -67,6 +67,11 @@ void AEngineer::WorkAtHotel()
 		{
 			bIsBuilding = true;
 			TargetHotel->AddEngineer();
+			if (this == PC->GetSelectedActor())
+			{
+				UE_LOG(LogTemp, Log, TEXT("RemoveSelectedActor"));
+				PC->RemoveSelectedActor();
+			}
 			Destroy();
 		}
 	}

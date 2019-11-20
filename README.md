@@ -1,6 +1,6 @@
 # README
 
-Goal: attract as much tourists as possible down to earth.
+**Goal**: attract as much tourists as possible down to earth.
 
 - you are a space cat
 - you run an interplanetary hotel company

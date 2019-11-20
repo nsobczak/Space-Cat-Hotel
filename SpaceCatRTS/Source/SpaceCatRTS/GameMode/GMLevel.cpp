@@ -98,7 +98,11 @@ void AGMLevel::HandleGoals()
 		}
 		else if (LevelSettings->Goals[i].IsActive())
 		{
-			//TODO: check for completion
+			float timeLeft = LevelSettings->Goals[i].GoalTimeToComplete - (LevelSettings->Goals[i].TimeLeftWhenGoalAppears - GameTimer);
+			if (0 >= timeLeft)
+			{
+				LevelSettings->Goals[i].SetMissed();
+			}
 		}
 	}
 }

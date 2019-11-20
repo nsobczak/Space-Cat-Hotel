@@ -46,13 +46,15 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "HotelRoom")
 		FORCEINLINE int32 GetRoomCount() { return RoomCount; }
+	UFUNCTION(BlueprintPure, Category = "HotelRoom")
+		FORCEINLINE int32 GetRoomBooked() { return RoomBooked; }
 	UFUNCTION(BlueprintCallable, Category = "HotelRoom")
 		void AddRoom(int32 val = 1);
 
 	UFUNCTION(BlueprintPure, Category = "Hotel")
 		FORCEINLINE int32 GetClientCount() { return ClientCount; }
 	UFUNCTION(BlueprintPure, Category = "Hotel")
-		FORCEINLINE int32 GetFreeRoomCount() { return RoomCount - ClientCount; }
+		FORCEINLINE int32 GetFreeRoomCount() { return RoomCount - RoomBooked; }
 
 	UFUNCTION(BlueprintCallable, Category = "Hotel")
 		bool AssignRoomToClient();
@@ -62,6 +64,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	static int32 HotelCount;
+
+	class ALevelSettings* LevelSettings;
 
 	UPROPERTY(VisibleAnywhere, Category = "Hotel")
 		int32 NeededEngineerCount;
@@ -74,6 +78,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Room")
 		int32 RoomCount = 1;
+	UPROPERTY(VisibleAnywhere, Category = "Room")
+		int32 RoomBooked = 0;
 	UPROPERTY(VisibleAnywhere, Category = "Room")
 		int32 ClientCount;
 };

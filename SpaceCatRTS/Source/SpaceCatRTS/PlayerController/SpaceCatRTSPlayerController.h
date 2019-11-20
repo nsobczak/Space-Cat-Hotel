@@ -16,6 +16,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Selection")
 		FORCEINLINE ASpaceCatRTSSelectable* GetSelectedActor() { return SelectedActor; };
+	UFUNCTION(BlueprintCallable, Category = "Selection")
+		void RemoveSelectedActor() { SelectedActor = nullptr; };
 
 	UFUNCTION(BlueprintPure, Category = "Resources")
 		FORCEINLINE int32 GetOxygenVal() { return Oxygen; };
@@ -48,7 +50,8 @@ protected:
 	virtual void SetupInputComponent() override;
 	// End PlayerController interface
 
-	ASpaceCatRTSSelectable* SelectedActor;
+	UPROPERTY(VisibleAnywhere, Category = "Debug")
+		ASpaceCatRTSSelectable* SelectedActor;
 
 	/**widget to use for our HUD screen*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MouseInterface")

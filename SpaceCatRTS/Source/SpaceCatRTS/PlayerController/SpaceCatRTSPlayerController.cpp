@@ -65,8 +65,8 @@ void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 	//UE_LOG(LogTemp, Log, TEXT("ViewportSize: X = %f | Y = %f"), ViewportSizeX, ViewportSizeY);
 	float xPercentage = LocationX / ViewportSizeX;
 	float yPercentage = LocationY / ViewportSizeY;
-	bMoveCameraXAxis = xPercentage < 0.04 ? -1 : xPercentage > 0.96 ? 1 : 0;
-	bMoveCameraYAxis = yPercentage < 0.04 ? 1 : yPercentage > 0.96 ? -1 : 0;
+	bMoveCameraXAxis = xPercentage < 0.08 ? -1 : xPercentage > 0.92 ? 1 : 0;
+	bMoveCameraYAxis = yPercentage < 0.08 ? 1 : yPercentage > 0.92 ? -1 : 0;
 
 	if (MouseCursorWidget)
 	{

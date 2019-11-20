@@ -1,4 +1,6 @@
 #include "Hotel.h"
+#include "Engine/World.h"
+#include "WorldSettings/LevelSettings.h"
 
 int32 AHotel::HotelCount = 0;
 
@@ -19,6 +21,12 @@ void AHotel::BeginPlay()
 	AHotel::HotelCount++;
 	RoomCount = 1;
 	UpdateNeededEngineerCount();
+
+	LevelSettings = Cast< ALevelSettings>(GetWorld()->GetWorldSettings());
+	if (!LevelSettings)
+	{
+		UE_LOG(LogTemp, Error, TEXT("failed to cast GetWorldSettings() to ALevelSettings"));
+	}
 }
 
 void AHotel::Destroyed()
@@ -33,21 +41,46 @@ void AHotel::Tick(float DeltaSeconds)
 
 void AHotel::UpdateNeededEngineerCount()
 {
-	NeededEngineerCount = 1 + RoomCount / NumberOfRoomPerEngineer;
+	NeededEngineerCount = FMath::Max(1, RoomCount / NumberOfRoomPerEngineer);
 }
 
 bool AHotel::AssignRoomToClient()
 {
-	//TODO: addapt with goal class
-	if (GetFreeRoomCount() > 0 && CurrentEngineerCount >= 1 + (ClientCount + 1) / NumberOfRoomPerEngineer)
+	//TODO: look into active goal list for goals with this hotel
+	// in these goals looks for 1st one that can be completed
+	// return true if one was found false otherwise
+
+	if (LevelSettings)
 	{
-		ClientCount++;
-		return true;
+		for (size_t i = 0; i < LevelSettings->Goals.Num(); ++i)
+		{
+			if (LevelSettings->Goals[i].IsActive())
+			{
+				bool canAddClient = false;
+				int32 roomCountToAdd = 0;
+				for (size_t j = 0; j < LevelSettings->Goals[i].ClientNeeds.Num(); ++j)
+				{
+					int32 freeRoomCount = this->RoomCount - this->RoomBooked;
+					if (LevelSettings->Goals[i].ClientNeeds[j].HotelNature == this->HNature
+						&& LevelSettings->Goals[i].ClientNeeds[j].RoomCount <= freeRoomCount
+						&& CurrentEngineerCount >= FMath::Max(1, (1 + this->RoomBooked + LevelSettings->Goals[i].ClientNeeds[j].RoomCount) / NumberOfRoomPerEngineer))
+					{
+						canAddClient = true;
+						roomCountToAdd += LevelSettings->Goals[i].ClientNeeds[j].RoomCount;
+					}
+				}
+				if (canAddClient)
+				{
+					ClientCount++;
+					RoomBooked += roomCountToAdd;
+					LevelSettings->Goals[i].SetCompleted();
+					return true;
+				}
+			}
+		}
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 void AHotel::AddRoom(int32 val)
