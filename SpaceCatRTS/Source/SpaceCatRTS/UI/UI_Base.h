@@ -30,16 +30,16 @@ public:
 
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FColor ButtonColor_Normal = FColor::FColor::FromHex("#000055FF");
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FColor ButtonColor_Hover = FColor::FColor::FromHex("#4BA698FF");
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FColor ButtonColor_Pressed = FColor::FColor::FromHex("#00A68DFF");
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI_Base")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FButtonStyle ButtonStyle;
 };
 
