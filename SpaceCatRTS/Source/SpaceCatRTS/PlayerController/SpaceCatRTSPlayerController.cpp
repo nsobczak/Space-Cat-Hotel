@@ -30,6 +30,11 @@ void ASpaceCatRTSPlayerController::SetMouseCursorWidget(TSubclassOf<UUserWidget>
 {
 	if (NewWidgetClass != nullptr)
 	{
+		if (MouseCursorWidget)
+		{
+			MouseCursorWidget->RemoveFromViewport();
+		}
+
 		MouseCursorWidget = CreateWidget<UUserWidget>(GetWorld(), NewWidgetClass);
 		if (MouseCursorWidget != nullptr)
 		{

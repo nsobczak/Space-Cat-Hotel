@@ -16,13 +16,13 @@ enum class EHudWidget : uint8
 };
 
 /**
- * 
+ *
  */
 UCLASS()
 class SPACECATRTS_API AHUDMain : public AHUD
 {
 	GENERATED_BODY()
-	
+
 public:
 	AHUDMain();
 
@@ -34,10 +34,10 @@ public:
 
 	/** The widget instance that we are using. */
 	UFUNCTION(BlueprintPure, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
-		UUserWidget* GetCurrentWidget();
+		FORCEINLINE UUserWidget* GetCurrentWidget() { return CurrentWidget; }
 
 	UFUNCTION(BlueprintPure, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
-		TSubclassOf<UUserWidget> GetCurrentWidgetClass();
+		FORCEINLINE TSubclassOf<UUserWidget> GetCurrentWidgetClass() { return CurrentWidgetClass; }
 
 	/** Remove the current menu widget (if not null) and create a new one from the specified class, if provided. Show cursor if true.*/
 	UFUNCTION(BlueprintCallable, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))

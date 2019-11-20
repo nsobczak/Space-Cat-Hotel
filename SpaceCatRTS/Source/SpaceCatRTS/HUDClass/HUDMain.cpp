@@ -1,5 +1,6 @@
 #include "HUDMain.h"
 #include "UMG/Public/UMG.h"
+#include "PlayerController/SpaceCatRTSPlayerController.h"
 
 AHUDMain::AHUDMain()
 {
@@ -54,16 +55,6 @@ void AHUDMain::ShowCursor(bool showCursor)
 	}
 }
 
-UUserWidget* AHUDMain::GetCurrentWidget()
-{
-	return CurrentWidget;
-}
-
-TSubclassOf<UUserWidget> AHUDMain::GetCurrentWidgetClass()
-{
-	return CurrentWidgetClass;
-}
-
 UUserWidget* AHUDMain::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass, bool showCursor)
 {
 	if (CurrentWidget != nullptr)
@@ -85,6 +76,13 @@ UUserWidget* AHUDMain::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass,
 		}
 
 		ShowCursor(showCursor);
+	}
+
+	// call update of custom cursor in playercontroller
+	ASpaceCatRTSPlayerController* cutomPC = Cast<ASpaceCatRTSPlayerController>(PlayerController);
+	if (cutomPC)
+	{
+		cutomPC->UpdateMouseCursorViewportOrder();
 	}
 
 	return CurrentWidget;

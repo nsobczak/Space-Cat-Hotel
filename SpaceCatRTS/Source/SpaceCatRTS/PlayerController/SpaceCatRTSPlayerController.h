@@ -34,6 +34,9 @@ public:
 		void AddRawMatVal(int32 val) { RawMat += val; };
 
 	void SetMouseCursorWidget(TSubclassOf<UUserWidget> NewWidgetClass);
+	UFUNCTION(BlueprintCallable, Category = "MouseInterface")
+		void UpdateMouseCursorViewportOrder() { SetMouseCursorWidget(MouseCursorWidgetClass); };
+
 
 protected:
 	// Called when the game starts or when spawned

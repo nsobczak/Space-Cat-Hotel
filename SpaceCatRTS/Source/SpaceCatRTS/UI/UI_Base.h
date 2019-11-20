@@ -5,13 +5,13 @@
 #include "UI_Base.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class SPACECATRTS_API UUI_Base : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
 	UUI_Base(const FObjectInitializer& ObjectInitializer);
 
@@ -30,7 +30,17 @@ public:
 
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+		FColor ButtonColor_Normal = FColor::FColor::FromHex("#000055FF");
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+		FColor ButtonColor_Hover = FColor::FColor::FromHex("#4BA698FF");
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Base")
+		FColor ButtonColor_Pressed = FColor::FColor::FromHex("#00A68DFF");
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "UI_Base")
+		FButtonStyle ButtonStyle;
 };
 
 
