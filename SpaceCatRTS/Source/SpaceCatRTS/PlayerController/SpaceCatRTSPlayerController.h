@@ -60,6 +60,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MouseInterface")
 		TSubclassOf<UUserWidget> MouseCursorWidgetClass;
 
+	/** Update camera location when cursor moves to viewport sides. */
+	void HandleCamera(float LocationX, float LocationY);
+
+	/** Check if mouse over facility site and change its material if it needed to be highlighted. */
+	void HandleFacilityHighlight();
+
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();
 

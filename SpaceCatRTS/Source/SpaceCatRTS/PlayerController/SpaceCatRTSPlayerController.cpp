@@ -20,6 +20,7 @@
 
 #define ECC_ClickableLeft ECC_GameTraceChannel1
 #define ECC_ClickableRight ECC_GameTraceChannel2
+#define ECC_CanBeHighlighted ECC_GameTraceChannel3
 
 ASpaceCatRTSPlayerController::ASpaceCatRTSPlayerController()
 {
@@ -51,6 +52,39 @@ void ASpaceCatRTSPlayerController::BeginPlay()
 	SetMouseCursorWidget(MouseCursorWidgetClass);
 }
 
+void ASpaceCatRTSPlayerController::HandleCamera(float LocationX, float LocationY)
+{
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	//UE_LOG(LogTemp, Log, TEXT("ViewportSize: X = %f | Y = %f"), ViewportSizeX, ViewportSizeY);
+	float xPercentage = LocationX / ViewportSizeX;
+	float yPercentage = LocationY / ViewportSizeY;
+	bMoveCameraXAxis = xPercentage < 0.075 ? -1 : xPercentage > 0.925 ? 1 : 0;
+	bMoveCameraYAxis = yPercentage < 0.075 ? 1 : yPercentage > 0.925 ? -1 : 0;
+}
+
+void ASpaceCatRTSPlayerController::HandleFacilityHighlight()
+{
+	if (SelectedActor)
+	{
+		AEngineer* const selectedEngineer = Cast<AEngineer>(SelectedActor);
+		FHitResult Hit;
+		GetHitResultUnderCursor(ECC_CanBeHighlighted, false, Hit);
+		if (Hit.bBlockingHit && selectedEngineer)
+		{
+			// We are hovering an something
+			AFacilitySite* const site = Cast<AFacilitySite>(Hit.GetActor());
+			bool canBuildHotel = selectedEngineer->GetCanBuildPurpleCone()
+				|| selectedEngineer->GetCanBuildRedCylinder() || selectedEngineer->GetCanBuildYellowCube();
+			if (site &&
+				(site->IsMineFacility() && selectedEngineer->GetCanBuildMine()
+					|| site->IsHotelFacility() && canBuildHotel))
+			{
+				site->Highlight();
+			}
+		}
+	}
+}
 
 void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 {
@@ -58,26 +92,18 @@ void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 
 	// keep updating the destination every tick while desired
 	if (bMoveToMouseCursor)
-	{
 		MoveToMouseCursor();
-	}
 
-	//Camera + mouse cursor
 	float LocationX, LocationY;
 	GetMousePosition(LocationX, LocationY);
-	//UE_LOG(LogTemp, Log, TEXT("MousePos: X = %f | Y = %f"), LocationX, LocationY);
-	int32 ViewportSizeX, ViewportSizeY;
-	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	//UE_LOG(LogTemp, Log, TEXT("ViewportSize: X = %f | Y = %f"), ViewportSizeX, ViewportSizeY);
-	float xPercentage = LocationX / ViewportSizeX;
-	float yPercentage = LocationY / ViewportSizeY;
-	bMoveCameraXAxis = xPercentage < 0.08 ? -1 : xPercentage > 0.92 ? 1 : 0;
-	bMoveCameraYAxis = yPercentage < 0.08 ? 1 : yPercentage > 0.92 ? -1 : 0;
 
+	// Mouse cursor
 	if (MouseCursorWidget)
-	{
 		MouseCursorWidget->SetPositionInViewport(FVector2D(LocationX, LocationY));
-	}
+
+	HandleCamera(LocationX, LocationY);
+
+	HandleFacilityHighlight();
 }
 
 
@@ -207,31 +233,33 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 		AEngineer*const oldEngineer = Cast<AEngineer>(SelectedActor);
 		if (oldEngineer && Hit.bBlockingHit)
 		{
-			AFacilitySite* const newSite = Cast<AFacilitySite>(Hit.GetActor());
-			if (newSite)
+			if (AFacilitySite* const newSite = Cast<AFacilitySite>(Hit.GetActor()))
 			{
-				//if (DEBUG) 
-				UE_LOG(LogTemp, Log, TEXT("We try building"));
+				if (DEBUG) UE_LOG(LogTemp, Log, TEXT("We try building"));
 				switch (newSite->GetConstructibleFacilityNature())
 				{
 				case EFacilityNature::FFN_MINE:
 					if (oldEngineer->GetCanBuildMine())
 					{
-						oldEngineer->BuildMine(newSite->GetActorLocation(), newSite->GetConstructibleMineNature());
+						if (oldEngineer->BuildMine(newSite->GetActorLocation(), newSite->GetConstructibleMineNature()))
+							newSite->Destroy();
 					}
 					break;
 				case EFacilityNature::FFN_HOTEL:
 					if (oldEngineer->GetCanBuildPurpleCone())
 					{
-						oldEngineer->BuildHotel_PurpleCone(newSite->GetActorLocation());
+						if (oldEngineer->BuildHotel_PurpleCone(newSite->GetActorLocation()))
+							newSite->Destroy();
 					}
 					else if (oldEngineer->GetCanBuildRedCylinder())
 					{
-						oldEngineer->BuildHotel_RedCylinder(newSite->GetActorLocation());
+						if (oldEngineer->BuildHotel_RedCylinder(newSite->GetActorLocation()))
+							newSite->Destroy();
 					}
 					else if (oldEngineer->GetCanBuildYellowCube())
 					{
-						oldEngineer->BuildHotel_YellowCube(newSite->GetActorLocation());
+						if (oldEngineer->BuildHotel_YellowCube(newSite->GetActorLocation()))
+							newSite->Destroy();
 					}
 					break;
 				default:

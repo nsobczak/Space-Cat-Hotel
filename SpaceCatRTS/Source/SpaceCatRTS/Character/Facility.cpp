@@ -21,4 +21,5 @@ void AFacility::BeginPlay()
 void AFacility::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
 }
