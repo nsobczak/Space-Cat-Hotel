@@ -11,6 +11,7 @@
 #include "Character/Hotel.h"
 #include "Character/Harvester.h"
 #include "Character/Engineer.h"
+#include "Actor/FacilitySite.h"
 #include "Engine/World.h"
 #include "Engine/GameViewportClient.h"
 #include "UMG/Public/UMG.h"
@@ -196,24 +197,66 @@ void ASpaceCatRTSPlayerController::OnSetDestinationReleased()
 
 void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 {
-	// We click, unposses current
-	if (SelectedActor)
-	{
-		SelectedActor = nullptr;
-	}
-
 	// Trace to see what is under the mouse cursor
 	FHitResult Hit;
 	GetHitResultUnderCursor(ECC_ClickableLeft, false, Hit);
 
+	// We click, unposses current or build
+	if (SelectedActor)
+	{
+		AEngineer*const oldEngineer = Cast<AEngineer>(SelectedActor);
+		if (oldEngineer && Hit.bBlockingHit)
+		{
+			AFacilitySite* const newSite = Cast<AFacilitySite>(Hit.GetActor());
+			if (newSite)
+			{
+				//if (DEBUG) 
+				UE_LOG(LogTemp, Log, TEXT("We try building"));
+				switch (newSite->GetConstructibleFacilityNature())
+				{
+				case EFacilityNature::FFN_MINE:
+					if (oldEngineer->GetCanBuildMine())
+					{
+						oldEngineer->BuildMine(newSite->GetActorLocation(), newSite->GetConstructibleMineNature());
+					}
+					break;
+				case EFacilityNature::FFN_HOTEL:
+					if (oldEngineer->GetCanBuildPurpleCone())
+					{
+						oldEngineer->BuildHotel_PurpleCone(newSite->GetActorLocation());
+					}
+					else if (oldEngineer->GetCanBuildRedCylinder())
+					{
+						oldEngineer->BuildHotel_RedCylinder(newSite->GetActorLocation());
+					}
+					else if (oldEngineer->GetCanBuildYellowCube())
+					{
+						oldEngineer->BuildHotel_YellowCube(newSite->GetActorLocation());
+					}
+					break;
+				default:
+					oldEngineer->ResetBuildPossibilities();
+					break;
+				}
+			}
+			else
+			{
+				oldEngineer->ResetBuildPossibilities();
+			}
+		}
+		else
+		{
+			SelectedActor = nullptr;
+		}
+	}
+
 	if (Hit.bBlockingHit)
 	{
-		if (ASpaceCatRTSSelectable* const newActor = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
+		if (ASpaceCatRTSSelectable* const newSelectable = Cast<ASpaceCatRTSSelectable>(Hit.GetActor()))
 		{
 			if (DEBUG) UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
-			SelectedActor = newActor;
+			SelectedActor = newSelectable;
 		}
-
 	}
 }
 

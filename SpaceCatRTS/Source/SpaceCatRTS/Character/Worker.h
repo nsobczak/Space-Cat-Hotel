@@ -2,14 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Character/SpaceCatRTSSelectable.h"
+#include "Utils/GameEnums.h"
 #include "Worker.generated.h"
-
-UENUM(BlueprintType)
-enum class EWorkerNature : uint8
-{
-	FWN_HARVESTER UMETA(DisplayName = "Harvester"),
-	FWN_ENGINEER UMETA(DisplayName = "Engineer")
-};
 
 /**
  *

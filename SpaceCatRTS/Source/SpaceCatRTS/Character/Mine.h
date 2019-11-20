@@ -1,17 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Character/Facility.h"
+#include "Utils/GameEnums.h"
 #include "Mine.generated.h"
-
-UENUM(BlueprintType)
-enum class EMineNature : uint8
-{
-	FMN_OXYGEN UMETA(DisplayName = "Oxygen"),
-	FMN_RAW UMETA(DisplayName = "Raw materials")
-};
 
 /**
  *

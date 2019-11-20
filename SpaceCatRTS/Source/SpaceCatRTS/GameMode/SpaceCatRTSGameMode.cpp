@@ -1,6 +1,5 @@
 #include "SpaceCatRTSGameMode.h"
 #include "PlayerController/SpaceCatRTSPlayerController.h"
-//#include "Character/SpaceCatRTSWorker.h"
 #include "UObject/ConstructorHelpers.h"
 
 ASpaceCatRTSGameMode::ASpaceCatRTSGameMode()

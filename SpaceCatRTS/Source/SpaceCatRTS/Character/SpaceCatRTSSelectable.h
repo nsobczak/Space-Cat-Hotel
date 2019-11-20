@@ -2,15 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Utils/GameEnums.h"
 #include "SpaceCatRTSSelectable.generated.h"
-
-
-UENUM(BlueprintType)
-enum class ESelectableNature : uint8
-{
-	FSN_FACILITY UMETA(DisplayName = "Facility"),
-	FSN_WORKER UMETA(DisplayName = "Worker")
-};
 
 UCLASS(Blueprintable)
 class ASpaceCatRTSSelectable : public ACharacter

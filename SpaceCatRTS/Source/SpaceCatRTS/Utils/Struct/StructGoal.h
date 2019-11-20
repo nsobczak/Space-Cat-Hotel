@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Utils/Struct/StructClientNeed.h"
+#include "Utils/GameEnums.h"
 #include "StructGoal.generated.h"
 
 UENUM(BlueprintType)
@@ -11,16 +12,6 @@ enum class EGoalStatus : uint8
 	FGC_ACTIVE UMETA(DisplayName = "Active"),
 	FGC_MISSED UMETA(DisplayName = "Missed"),
 	FGC_COMPLETED UMETA(DisplayName = "Completed")
-};
-
-UENUM(BlueprintType)
-enum class EAnimalBreed : uint8
-{
-	FAB_BEAR UMETA(DisplayName = "Flying bear"),
-	FAB_COW UMETA(DisplayName = "Nuclear cow"),
-	FAB_WORM UMETA(DisplayName = "Giant worm"),
-	FAB_FISH UMETA(DisplayName = "Solar fish"),
-	FAB_PARROT UMETA(DisplayName = "Vampire parrot")
 };
 
 /**

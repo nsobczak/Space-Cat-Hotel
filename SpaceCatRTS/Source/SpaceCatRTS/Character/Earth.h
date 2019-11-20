@@ -28,8 +28,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Action")
-		TSubclassOf<class AHarvester> BPHarvester;
+		TSubclassOf<class AHarvester> BPHarvesterToSpawn;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Action")
-		TSubclassOf <class AEngineer> BPEngineer;
+		TSubclassOf <class AEngineer> BPEngineerToSpawn;
 
 };

@@ -2,15 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "Character/SpaceCatRTSSelectable.h"
+#include "Utils/GameEnums.h"
 #include "Facility.generated.h"
 
-UENUM(BlueprintType)
-enum class EFacilityNature : uint8
-{
-	FFN_MINE UMETA(DisplayName = "Mine"),
-	FFN_HOTEL UMETA(DisplayName = "Hotel"),
-	FFN_EARTH UMETA(DisplayName = "Earth")
-};
 
 /**
  *

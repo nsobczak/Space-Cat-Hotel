@@ -2,15 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Character/Facility.h"
+#include "Utils/GameEnums.h"
 #include "Hotel.generated.h"
-
-UENUM(BlueprintType)
-enum class EHotelNature : uint8
-{
-	FHN_PURPLE_CONE UMETA(DisplayName = "Purple cone"),
-	FHN_YELLOW_CUBE UMETA(DisplayName = "Yellow cube"),
-	FHN_RED_CYLINDER UMETA(DisplayName = "Red cylinder")
-};
 
 /**
  *
