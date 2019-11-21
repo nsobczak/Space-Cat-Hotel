@@ -11,6 +11,18 @@ class ASpaceCatRTSGameMode : public AGameModeBase
 
 public:
 	ASpaceCatRTSGameMode();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	/** AudioComponent currently playing*/
+	UPROPERTY(BlueprintReadOnly, Category = "Audio_Settings")
+		class UAudioComponent* CurrentTheme_AC;
+
+	/** Main theme for the map*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Audio")
+		class USoundBase* MapTheme;
 };
 
 

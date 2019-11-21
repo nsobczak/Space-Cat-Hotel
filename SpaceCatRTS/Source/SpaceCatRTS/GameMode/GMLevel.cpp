@@ -1,9 +1,9 @@
 #include "GMLevel.h"
+#include "UObject/ConstructorHelpers.h"
 #include "PlayerController/SpaceCatRTSPlayerController.h"
 #include "Character/SpaceCatRTSCamera.h"
 #include "Character/Hotel.h"
 #include "Character/Mine.h"
-#include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
 #include "WorldSettings/LevelSettings.h"
 #include "Engine/Classes/Kismet/GameplayStatics.h"
@@ -61,6 +61,8 @@ void AGMLevel::SetupGame()
 
 void AGMLevel::BeginPlay()
 {
+	Super::BeginPlay();
+
 	SetupGame();
 }
 
