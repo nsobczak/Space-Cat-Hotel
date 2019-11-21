@@ -52,7 +52,7 @@ public:
 		float TimeLeftWhenGoalAppears = 300.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal")
-		EAnimalBreed Breed;
+		EAnimalBreed Breed = EAnimalBreed::FAB_BEAR;
 
 	/**In seconds*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal")

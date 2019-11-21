@@ -95,7 +95,8 @@ void AEngineer::WorkAtHotel()
 	if (!bIsBuilding)
 	{
 		//go to Hotel
-		UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), TargetHotel->GetActorLocation());
+		const FVector dest = FVector(TargetHotel->GetActorLocation().X, TargetHotel->GetActorLocation().Y, GetActorLocation().Z);
+		UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), dest);
 
 		//if at Hotel
 		if (FVector::DistSquared(GetActorLocation(), TargetHotel->GetActorLocation()) < TargetHotel->GetSqDistToBeSeenInside())

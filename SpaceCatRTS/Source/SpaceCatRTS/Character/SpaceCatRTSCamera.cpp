@@ -67,13 +67,13 @@ void ASpaceCatRTSCamera::Tick(float DeltaTime)
 	{
 		FVector loc = GetActorLocation();
 		FVector dir = FVector(PlayerController->bMoveCameraYAxis, PlayerController->bMoveCameraXAxis, 0);
-		if (dir.X == -1 && loc.X < LevelSettings->LevelInfo.xMin ||
-			dir.X == 1 && loc.X > LevelSettings->LevelInfo.xMax)
+		if ((dir.X == -1 && loc.X < LevelSettings->LevelInfo.xMin) || 
+			(dir.X == 1 && loc.X > LevelSettings->LevelInfo.xMax))
 		{
 			dir.X = 0;
 		}
-		if (dir.Y == -1 && loc.Y < LevelSettings->LevelInfo.yMin ||
-			dir.Y == 1 && loc.Y > LevelSettings->LevelInfo.yMax)
+		if ((dir.Y == -1 && loc.Y < LevelSettings->LevelInfo.yMin) ||
+			(dir.Y == 1 && loc.Y > LevelSettings->LevelInfo.yMax))
 		{
 			dir.Y = 0;
 		}

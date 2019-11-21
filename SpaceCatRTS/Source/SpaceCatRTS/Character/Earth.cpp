@@ -40,19 +40,16 @@ void AEarth::Tick(float DeltaSeconds)
 
 AHarvester* AEarth::SpawnHarvester()
 {
-	if (BPHarvesterToSpawn)
+	if (BPHarvesterToSpawn && PC && BPHarvesterToSpawn.GetDefaultObject()
+		&& PC->GetOxygenVal() >= BPHarvesterToSpawn.GetDefaultObject()->CostOxygenToSpawn
+		&&  PC->GetOxygenVal() >= BPHarvesterToSpawn.GetDefaultObject()->CostRawToSpawn)
 	{
-		if (BPHarvesterToSpawn && PC && BPHarvesterToSpawn.GetDefaultObject()
-			&& PC->GetOxygenVal() >= BPHarvesterToSpawn.GetDefaultObject()->CostOxygenToSpawn
-			&&  PC->GetOxygenVal() >= BPHarvesterToSpawn.GetDefaultObject()->CostRawToSpawn)
+		FVector NewLocation = GetActorLocation() + FVector(0.f, 600.f, 100.f);
+		if (AHarvester* const newHarvester = GetWorld()->SpawnActor<AHarvester>(BPHarvesterToSpawn, NewLocation, FRotator::ZeroRotator))
 		{
-			FVector NewLocation = GetActorLocation() + FVector(0.f, 500.f, 100.f);
-			if (AHarvester* const newHarvester = GetWorld()->SpawnActor<AHarvester>(BPHarvesterToSpawn, NewLocation, FRotator::ZeroRotator))
-			{
-				PC->AddOxygenVal(-BPHarvesterToSpawn.GetDefaultObject()->CostOxygenToSpawn);
-				PC->AddRawMatVal(-BPHarvesterToSpawn.GetDefaultObject()->CostRawToSpawn);
-				return newHarvester;
-			}
+			PC->AddOxygenVal(-BPHarvesterToSpawn.GetDefaultObject()->CostOxygenToSpawn);
+			PC->AddRawMatVal(-BPHarvesterToSpawn.GetDefaultObject()->CostRawToSpawn);
+			return newHarvester;
 		}
 	}
 	return nullptr;
@@ -64,7 +61,7 @@ AEngineer* AEarth::SpawnEngineer()
 		&& PC->GetOxygenVal() >= BPEngineerToSpawn.GetDefaultObject()->CostOxygenToSpawn
 		&& PC->GetRawMatVal() >= BPEngineerToSpawn.GetDefaultObject()->CostRawToSpawn)
 	{
-		FVector NewLocation = GetActorLocation() + FVector(0.f, 500.f, 100.f);
+		FVector NewLocation = GetActorLocation() + FVector(0.f, 600.f, 100.f);
 		if (AEngineer* const newEngineer = GetWorld()->SpawnActor<AEngineer>(BPEngineerToSpawn, NewLocation, FRotator::ZeroRotator))
 		{
 			PC->AddOxygenVal(-BPEngineerToSpawn.GetDefaultObject()->CostOxygenToSpawn);

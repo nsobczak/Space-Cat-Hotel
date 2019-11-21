@@ -20,7 +20,7 @@ public:
 	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Need")
-		EHotelNature HotelNature;
+		EHotelNature HotelNature = EHotelNature::FHN_PURPLE_CONE;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Need")
 		int32 RoomCount = 1;

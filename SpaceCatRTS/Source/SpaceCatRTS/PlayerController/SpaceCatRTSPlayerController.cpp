@@ -77,9 +77,8 @@ void ASpaceCatRTSPlayerController::HandleFacilityHighlight()
 			AFacilitySite* const site = Cast<AFacilitySite>(Hit.GetActor());
 			bool canBuildHotel = selectedEngineer->GetCanBuildPurpleCone()
 				|| selectedEngineer->GetCanBuildRedCylinder() || selectedEngineer->GetCanBuildYellowCube();
-			if (site &&
-				(site->IsMineFacility() && selectedEngineer->GetCanBuildMine()
-					|| site->IsHotelFacility() && canBuildHotel))
+			if (site && ((site->IsMineFacility() && selectedEngineer->GetCanBuildMine())
+				|| (site->IsHotelFacility() && canBuildHotel)))
 			{
 				site->Highlight();
 			}
@@ -157,12 +156,14 @@ void ASpaceCatRTSPlayerController::SetNewMoveDestination(const FVector DestLocat
 {
 	if (SelectedActor && SelectedActor->SNature == ESelectableNature::FSN_WORKER)
 	{
-		float const Distance = FVector::Dist(DestLocation, SelectedActor->GetActorLocation());
+		//keep location in plane
+		const FVector destInPlane = FVector(DestLocation.X, DestLocation.Y, SelectedActor->GetActorLocation().Z);
+		float const Distance = FVector::Dist(destInPlane, SelectedActor->GetActorLocation());
 
 		// We need to issue move command only if far enough in order for walk animation to play correctly
 		if ((Distance > 120.0f))
 		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedActor->GetController(), DestLocation);
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(SelectedActor->GetController(), destInPlane);
 			if (DEBUG) 	UE_LOG(LogTemp, Log, TEXT("moving selected actor"));
 		}
 	}
