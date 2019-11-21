@@ -54,7 +54,7 @@ bool AHarvester::AssignMineToHarvest(AMine* newMine)
 	if (newMine)
 	{
 		HarvestTimer = 0;
-		UE_LOG(LogTemp, Log, TEXT("working at mine"));
+		if (DEBUG) UE_LOG(LogTemp, Log, TEXT("working at mine"));
 		return true;
 	}
 	else
@@ -66,7 +66,7 @@ bool AHarvester::AssignMineToHarvest(AMine* newMine)
 
 void AHarvester::DoNothing()
 {
-	UE_LOG(LogTemp, Log, TEXT("DoNothing called"));
+	if (DEBUG) UE_LOG(LogTemp, Log, TEXT("DoNothing called"));
 	AssignMineToHarvest(nullptr);
 }
 

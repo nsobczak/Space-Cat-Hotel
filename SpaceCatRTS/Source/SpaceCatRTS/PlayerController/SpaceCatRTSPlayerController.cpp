@@ -270,10 +270,12 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 			else
 			{
 				oldEngineer->ResetBuildPossibilities();
+				oldEngineer->RemoveHighlight();
 			}
 		}
 		else
 		{
+			SelectedActor->RemoveHighlight();
 			SelectedActor = nullptr;
 		}
 	}
@@ -284,6 +286,7 @@ void ASpaceCatRTSPlayerController::OnSelectPawnPressed()
 		{
 			if (DEBUG) UE_LOG(LogTemp, Log, TEXT("We selected a clickable actor"));
 			SelectedActor = newSelectable;
+			SelectedActor->Highlight();
 		}
 	}
 }

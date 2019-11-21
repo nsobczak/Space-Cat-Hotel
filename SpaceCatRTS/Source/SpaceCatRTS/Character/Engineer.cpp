@@ -41,7 +41,7 @@ void AEngineer::Tick(float DeltaSeconds)
 
 void AEngineer::DoNothing()
 {
-	UE_LOG(LogTemp, Log, TEXT("DoNothing called"));
+	if (DEBUG) UE_LOG(LogTemp, Log, TEXT("DoNothing called"));
 	AssignHotelToWork(nullptr);
 }
 
@@ -50,7 +50,7 @@ bool AEngineer::AssignHotelToWork(class AHotel* newHotel)
 	TargetHotel = newHotel;
 	if (newHotel)
 	{
-		UE_LOG(LogTemp, Log, TEXT("working at hotel"));
+		if (DEBUG) UE_LOG(LogTemp, Log, TEXT("working at hotel"));
 		return true;
 	}
 	else
@@ -76,7 +76,7 @@ void AEngineer::WorkAtHotel()
 			TargetHotel->AddEngineer();
 			if (this == PC->GetSelectedActor())
 			{
-				UE_LOG(LogTemp, Log, TEXT("RemoveSelectedActor"));
+				if (DEBUG) UE_LOG(LogTemp, Log, TEXT("RemoveSelectedActor"));
 				PC->RemoveSelectedActor();
 			}
 			Destroy();
