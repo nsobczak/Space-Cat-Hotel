@@ -82,7 +82,8 @@ void AHarvester::WorkAtMine()
 		if (ResourceAmount > 0)
 		{
 			//go to Earth
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Earth->GetActorLocation());
+			const FVector dest = FVector(Earth->GetActorLocation().X, Earth->GetActorLocation().Y, GetActorLocation().Z);
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), dest);
 			bIsBuilding = false;
 
 			//if at earth
@@ -103,6 +104,7 @@ void AHarvester::WorkAtMine()
 		else
 		{
 			//go at mine
+			const FVector dest = FVector(TargetMine->GetActorLocation().X, TargetMine->GetActorLocation().Y, GetActorLocation().Z);
 			UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), TargetMine->GetActorLocation());
 
 			//if at mine

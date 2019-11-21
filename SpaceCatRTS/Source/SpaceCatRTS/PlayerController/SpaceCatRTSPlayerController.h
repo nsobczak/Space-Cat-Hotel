@@ -21,14 +21,14 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Resources")
 		FORCEINLINE int32 GetOxygenVal() { return Oxygen; };
-	UFUNCTION(BlueprintCallable, Category = "Resources")
+	UFUNCTION(exec, BlueprintCallable, Category = "Resources")
 		void SetOxygenVal(int32 val) { Oxygen = val; };
 	UFUNCTION(BlueprintCallable, Category = "Resources")
 		void AddOxygenVal(int32 val) { Oxygen += val; };
 
 	UFUNCTION(BlueprintPure, Category = "Resources")
 		FORCEINLINE int32 GetRawMatVal() { return RawMat; };
-	UFUNCTION(BlueprintCallable, Category = "Resources")
+	UFUNCTION(exec, BlueprintCallable, Category = "Resources")
 		void SetRawMatVal(int32 val) { RawMat = val; };
 	UFUNCTION(BlueprintCallable, Category = "Resources")
 		void AddRawMatVal(int32 val) { RawMat += val; };

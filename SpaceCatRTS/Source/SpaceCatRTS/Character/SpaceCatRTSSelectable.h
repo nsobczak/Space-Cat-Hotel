@@ -32,6 +32,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Selectable")
 		FORCEINLINE bool GetCostRawToSpawn() { return CostRawToSpawn; }
 
+	UPROPERTY(EditDefaultsOnly, Category = "Selectable")
+		int32 CostOxygenToSpawn;
+	UPROPERTY(EditDefaultsOnly, Category = "Selectable")
+		int32 CostRawToSpawn;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -55,10 +60,5 @@ protected:
 		UMaterialInterface* Mat_Highlighted;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SelectableHighlight")
 		UMaterialInterface* Mat_NotHighlighted;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selectable")
-		int32 CostOxygenToSpawn = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selectable")
-		int32 CostRawToSpawn = 0;
 };
 

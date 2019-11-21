@@ -1,4 +1,5 @@
 #include "Engineer.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Character/Hotel.h"
 #include "Character/Mine.h"
@@ -13,6 +14,33 @@ AEngineer::AEngineer()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	// Default blueprints
+	static ConstructorHelpers::FClassFinder<AMine> oxMineBP(TEXT("/Game/Selectable/Facility/BPMineOxygen"));
+	if (oxMineBP.Succeeded())
+	{
+		BPOxygenMineToBuild = oxMineBP.Class;
+	}
+	static ConstructorHelpers::FClassFinder<AMine> rawMineBP(TEXT("/Game/Selectable/Facility/BPMineRawMat"));
+	if (rawMineBP.Succeeded())
+	{
+		BPRawMineToBuild = rawMineBP.Class;
+	}
+	static ConstructorHelpers::FClassFinder<AHotel> hotelPCBP(TEXT("/Game/Selectable/Facility/BPHotelPurpleCone"));
+	if (hotelPCBP.Succeeded())
+	{
+		BPPurpleConeHotelToBuild = hotelPCBP.Class;
+	}
+	static ConstructorHelpers::FClassFinder<AHotel> hotelYCBP(TEXT("/Game/Selectable/Facility/BPHotelYellowCube"));
+	if (hotelYCBP.Succeeded())
+	{
+		BPYellowCubeHotelToBuild = hotelYCBP.Class;
+	}
+	static ConstructorHelpers::FClassFinder<AHotel> hotelRCBP(TEXT("/Game/Selectable/Facility/BPHotelRedCylinder"));
+	if (hotelRCBP.Succeeded())
+	{
+		BPRedCylinderHotelToBuild = hotelRCBP.Class;
+	}
 
 	CostOxygenToSpawn = 200;
 }
@@ -86,23 +114,36 @@ void AEngineer::WorkAtHotel()
 
 AMine* AEngineer::BuildMine(FVector location, EMineNature mineNature)
 {
-	//TODO: check if enough raw to build
 	if (bCanBuildMine && BPOxygenMineToBuild && BPRawMineToBuild)
 	{
 		FVector NewLocation = location + FVector(0.f, 0.f, 150.f);
 		switch (mineNature)
 		{
 		case EMineNature::FMN_OXYGEN:
-			if (BPOxygenMineToBuild)
+			if (BPOxygenMineToBuild && PC && BPOxygenMineToBuild.GetDefaultObject()
+				&& PC->GetOxygenVal() >= BPOxygenMineToBuild.GetDefaultObject()->CostOxygenToSpawn
+				&& PC->GetRawMatVal() >= BPOxygenMineToBuild.GetDefaultObject()->CostRawToSpawn)
 			{
-				return GetWorld()->SpawnActor<AMine>(BPOxygenMineToBuild, NewLocation, FRotator::ZeroRotator);
+				if (AMine* const newMine = GetWorld()->SpawnActor<AMine>(BPOxygenMineToBuild, NewLocation, FRotator::ZeroRotator))
+				{
+					PC->AddOxygenVal(-BPOxygenMineToBuild.GetDefaultObject()->CostOxygenToSpawn);
+					PC->AddRawMatVal(-BPOxygenMineToBuild.GetDefaultObject()->CostRawToSpawn);
+					return newMine;
+				}
 			}
 			return nullptr;
 			break;
 		default:
-			if (BPRawMineToBuild)
+			if (BPRawMineToBuild && PC && BPRawMineToBuild.GetDefaultObject()
+				&& PC->GetOxygenVal() >= BPRawMineToBuild.GetDefaultObject()->CostOxygenToSpawn
+				&& PC->GetRawMatVal() >= BPRawMineToBuild.GetDefaultObject()->CostRawToSpawn)
 			{
-				return GetWorld()->SpawnActor<AMine>(BPRawMineToBuild, NewLocation, FRotator::ZeroRotator);
+				if (AMine* const newMine = GetWorld()->SpawnActor<AMine>(BPRawMineToBuild, NewLocation, FRotator::ZeroRotator))
+				{
+					PC->AddOxygenVal(-BPRawMineToBuild.GetDefaultObject()->CostOxygenToSpawn);
+					PC->AddRawMatVal(-BPRawMineToBuild.GetDefaultObject()->CostRawToSpawn);
+					return newMine;
+				}
 			}
 			return nullptr;
 			break;
@@ -116,50 +157,58 @@ AMine* AEngineer::BuildMine(FVector location, EMineNature mineNature)
 
 AHotel* AEngineer::BuildHotel(TSubclassOf <class AHotel> hotelBP, FVector location, EHotelNature hotelNature)
 {
-	//TODO: check if enough raw to build
 	if (hotelBP)
 	{
 		FVector NewLocation = location + FVector(0.f, 0.f, 150.f);
 		return GetWorld()->SpawnActor<AHotel>(hotelBP, NewLocation, FRotator::ZeroRotator);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 AHotel* AEngineer::BuildHotel_PurpleCone(FVector location)
 {
-	if (bCanBuildPurpleCone && BPPurpleConeHotelToBuild)
+	if (bCanBuildPurpleCone && BPPurpleConeHotelToBuild && PC && BPPurpleConeHotelToBuild.GetDefaultObject()
+		&& PC->GetOxygenVal() >= BPPurpleConeHotelToBuild.GetDefaultObject()->CostOxygenToSpawn
+		&& PC->GetRawMatVal() >= BPPurpleConeHotelToBuild.GetDefaultObject()->CostRawToSpawn)
 	{
-		return BuildHotel(BPPurpleConeHotelToBuild, location, EHotelNature::FHN_PURPLE_CONE);
+		if (AHotel* const newHotel = BuildHotel(BPPurpleConeHotelToBuild, location, EHotelNature::FHN_PURPLE_CONE))
+		{
+			PC->AddOxygenVal(-BPPurpleConeHotelToBuild.GetDefaultObject()->CostOxygenToSpawn);
+			PC->AddRawMatVal(-BPPurpleConeHotelToBuild.GetDefaultObject()->CostRawToSpawn);
+			return newHotel;
+		}
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 AHotel* AEngineer::BuildHotel_YellowCube(FVector location)
 {
-	if (bCanBuildYellowCube && BPYellowCubeHotelToBuild)
+	if (bCanBuildYellowCube && BPYellowCubeHotelToBuild && PC && BPYellowCubeHotelToBuild.GetDefaultObject()
+		&& PC->GetOxygenVal() >= BPYellowCubeHotelToBuild.GetDefaultObject()->CostOxygenToSpawn
+		&& PC->GetRawMatVal() >= BPYellowCubeHotelToBuild.GetDefaultObject()->CostRawToSpawn)
 	{
-		return BuildHotel(BPYellowCubeHotelToBuild, location, EHotelNature::FHN_YELLOW_CUBE);
+		if (AHotel* const newHotel = BuildHotel(BPYellowCubeHotelToBuild, location, EHotelNature::FHN_YELLOW_CUBE))
+		{
+			PC->AddOxygenVal(-BPYellowCubeHotelToBuild.GetDefaultObject()->CostOxygenToSpawn);
+			PC->AddRawMatVal(-BPYellowCubeHotelToBuild.GetDefaultObject()->CostRawToSpawn);
+			return newHotel;
+		}
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 AHotel* AEngineer::BuildHotel_RedCylinder(FVector location)
 {
-	if (bCanBuildRedCylinder && BPRedCylinderHotelToBuild)
+	if (bCanBuildRedCylinder && BPRedCylinderHotelToBuild && PC && BPRedCylinderHotelToBuild.GetDefaultObject()
+		&& PC->GetOxygenVal() >= BPRedCylinderHotelToBuild.GetDefaultObject()->CostOxygenToSpawn
+		&& PC->GetRawMatVal() >= BPRedCylinderHotelToBuild.GetDefaultObject()->CostRawToSpawn)
 	{
-		return BuildHotel(BPRedCylinderHotelToBuild, location, EHotelNature::FHN_RED_CYLINDER);
+		if (AHotel* const newHotel = BuildHotel(BPRedCylinderHotelToBuild, location, EHotelNature::FHN_RED_CYLINDER))
+		{
+			PC->AddOxygenVal(-BPRedCylinderHotelToBuild.GetDefaultObject()->CostOxygenToSpawn);
+			PC->AddRawMatVal(-BPRedCylinderHotelToBuild.GetDefaultObject()->CostRawToSpawn);
+			return newHotel;
+		}
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
