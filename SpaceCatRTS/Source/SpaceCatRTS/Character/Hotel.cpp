@@ -9,6 +9,9 @@ AHotel::AHotel()
 {
 	FNature = EFacilityNature::FFN_HOTEL;
 	DistToBeSeenInside = 200.f;
+
+	CostOxygenToSpawn = 20;
+	CostRawToSpawn = 100;
 	CostOxygenToAddRoom = 10;
 	CostRawToAddRoom = 10;
 

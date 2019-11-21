@@ -43,7 +43,7 @@ void AGMLevel::SetupGame()
 		ASpaceCatRTSPlayerController* pc = Cast<ASpaceCatRTSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 		if (pc)
 		{
-			pc->SetOxygenVal(0);
+			pc->SetOxygenVal(20);
 			pc->SetRawMatVal(0);
 
 			pc->SetInputMode(FInputModeGameAndUI().SetHideCursorDuringCapture(false));

@@ -16,7 +16,7 @@ AHarvester::AHarvester()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
-	CostOxygenToSpawn = 50;
+	CostOxygenToSpawn = 40;
 }
 
 void AHarvester::BeginPlay()

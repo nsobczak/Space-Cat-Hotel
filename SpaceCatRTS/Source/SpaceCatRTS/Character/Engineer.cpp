@@ -42,7 +42,7 @@ AEngineer::AEngineer()
 		BPRedCylinderHotelToBuild = hotelRCBP.Class;
 	}
 
-	CostOxygenToSpawn = 200;
+	CostOxygenToSpawn = 80;
 }
 
 void  AEngineer::ResetBuildPossibilities()

@@ -4,8 +4,8 @@ AFacility::AFacility()
 {
 	SNature = ESelectableNature::FSN_FACILITY;
 
-	CostOxygenToSpawn = 50;
-	CostRawToSpawn = 100;
+	CostOxygenToSpawn = 0;
+	CostRawToSpawn = 50;
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
