@@ -1,6 +1,7 @@
 #include "Hotel.h"
 #include "Engine/World.h"
 #include "WorldSettings/LevelSettings.h"
+#include "PlayerController/SpaceCatRTSPlayerController.h"
 
 int32 AHotel::HotelCount = 0;
 
@@ -8,6 +9,8 @@ AHotel::AHotel()
 {
 	FNature = EFacilityNature::FFN_HOTEL;
 	DistToBeSeenInside = 200.f;
+	CostOxygenToAddRoom = 10;
+	CostRawToAddRoom = 10;
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
@@ -83,8 +86,15 @@ bool AHotel::AssignRoomToClient()
 	return false;
 }
 
-void AHotel::AddRoom(int32 val)
+bool AHotel::AddRoom(int32 val)
 {
-	RoomCount += val;
-	UpdateNeededEngineerCount();
+	if (PC && PC->GetOxygenVal() >= CostOxygenToAddRoom && PC->GetRawMatVal() >= CostRawToAddRoom)
+	{
+		RoomCount += val;
+		UpdateNeededEngineerCount();
+		PC->AddOxygenVal(-CostOxygenToAddRoom);
+		PC->AddRawMatVal(-CostRawToAddRoom);
+		return true;
+	}
+	return false;
 }

@@ -131,7 +131,6 @@ AMine* AEngineer::BuildMine(FVector location, EMineNature mineNature)
 					return newMine;
 				}
 			}
-			return nullptr;
 			break;
 		default:
 			if (BPRawMineToBuild && PC && BPRawMineToBuild.GetDefaultObject()
@@ -145,14 +144,10 @@ AMine* AEngineer::BuildMine(FVector location, EMineNature mineNature)
 					return newMine;
 				}
 			}
-			return nullptr;
 			break;
 		}
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 AHotel* AEngineer::BuildHotel(TSubclassOf <class AHotel> hotelBP, FVector location, EHotelNature hotelNature)

@@ -24,15 +24,17 @@ public:
 	void BuildWidget();
 
 	UFUNCTION(BlueprintCallable, Category = "UI_Base", Meta = (BlueprintProtected = "true"))
-		void ShowInfo();
+		void ShowInfo() { this->SetVisibility(ESlateVisibility::Visible); }
 	UFUNCTION(BlueprintCallable, Category = "UI_Base", Meta = (BlueprintProtected = "true"))
-		void HideInfo();
+		void HideInfo() { this->SetVisibility(ESlateVisibility::Hidden); }
 
+	UFUNCTION(BlueprintPure, Category = "UI_Base", Meta = (BlueprintProtected = "true"))
+		FORCEINLINE class UWorld* CustomGetWorld() { return GetWorld(); }
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FColor ButtonColor_Normal = FColor::FColor::FromHex("#000055FF");
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI_Button")
 		FColor ButtonColor_Hover = FColor::FColor::FromHex("#4BA698FF");
 

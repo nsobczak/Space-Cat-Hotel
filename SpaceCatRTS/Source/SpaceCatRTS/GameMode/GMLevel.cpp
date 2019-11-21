@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "WorldSettings/LevelSettings.h"
 #include "Engine/Classes/Kismet/GameplayStatics.h"
+#include "HUDClass/HUDMain.h"
 
 
 AGMLevel::AGMLevel()
@@ -81,8 +82,19 @@ void AGMLevel::Tick(float DeltaTime)
 
 void AGMLevel::GameOver()
 {
-	UE_LOG(LogTemp, Log, TEXT("Game Over"));
+	if (ASpaceCatRTSPlayerController* pc = Cast<ASpaceCatRTSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
+	{
+		AHUDMain * currentHUD = Cast<AHUDMain>(pc->GetHUD());
+		if (currentHUD && !currentHUD->IsShowingWidget(EHudWidget::FHW_END))
+		{
+			UE_LOG(LogTemp, Log, TEXT("Game Over"));
 
+			pc->SetInputMode(FInputModeUIOnly());
+			pc->SetCinematicMode(true, false, false, true, true);
+			pc->bMoveCameraWithCursor = false;
+			currentHUD->ShowEndingWidget();
+		}
+	}
 }
 
 void AGMLevel::HandleGoals()

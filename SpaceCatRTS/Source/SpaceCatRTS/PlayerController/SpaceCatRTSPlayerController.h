@@ -37,6 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MouseInterface")
 		void UpdateMouseCursorViewportOrder() { SetMouseCursorWidget(MouseCursorWidgetClass); };
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MouseInterface")
+		bool bMoveCameraWithCursor;
 
 protected:
 	// Called when the game starts or when spawned

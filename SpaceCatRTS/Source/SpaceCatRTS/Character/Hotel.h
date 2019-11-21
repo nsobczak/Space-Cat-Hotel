@@ -42,7 +42,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "HotelRoom")
 		FORCEINLINE int32 GetRoomBooked() { return RoomBooked; }
 	UFUNCTION(BlueprintCallable, Category = "HotelRoom")
-		void AddRoom(int32 val = 1);
+		bool AddRoom(int32 val = 1);
 
 	UFUNCTION(BlueprintPure, Category = "Hotel")
 		FORCEINLINE int32 GetClientCount() { return ClientCount; }
@@ -59,6 +59,11 @@ protected:
 	static int32 HotelCount;
 
 	class ALevelSettings* LevelSettings;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Hotel")
+		int32 CostOxygenToAddRoom;
+	UPROPERTY(EditDefaultsOnly, Category = "Hotel")
+		int32 CostRawToAddRoom;
 
 	UPROPERTY(VisibleAnywhere, Category = "Hotel")
 		int32 NeededEngineerCount;

@@ -1,5 +1,6 @@
 #include "UI_Base.h"
 #include "UMG/Public/UMG.h"
+#include "Engine/World.h"
 
 
 UUI_Base::UUI_Base(const FObjectInitializer& ObjectInitializer)
@@ -25,17 +26,6 @@ void UUI_Base::NativeConstruct()
 
 	// Call the Blueprint "Event Construct" node
 	Super::NativeConstruct();
-}
-
-
-void UUI_Base::ShowInfo()
-{
-	this->SetVisibility(ESlateVisibility::Visible);
-}
-
-void UUI_Base::HideInfo()
-{
-	this->SetVisibility(ESlateVisibility::Hidden);
 }
 
 //void UUI_Base::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)

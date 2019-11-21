@@ -26,6 +26,7 @@ ASpaceCatRTSPlayerController::ASpaceCatRTSPlayerController()
 {
 	bShowMouseCursor = false;
 	DefaultMouseCursor = EMouseCursor::None;
+	bMoveCameraWithCursor = true;
 }
 
 void ASpaceCatRTSPlayerController::SetMouseCursorWidget(TSubclassOf<UUserWidget> NewWidgetClass)
@@ -101,7 +102,8 @@ void ASpaceCatRTSPlayerController::PlayerTick(float DeltaTime)
 	if (MouseCursorWidget)
 		MouseCursorWidget->SetPositionInViewport(FVector2D(LocationX, LocationY));
 
-	HandleCamera(LocationX, LocationY);
+	if (bMoveCameraWithCursor)
+		HandleCamera(LocationX, LocationY);
 
 	HandleFacilityHighlight();
 }
