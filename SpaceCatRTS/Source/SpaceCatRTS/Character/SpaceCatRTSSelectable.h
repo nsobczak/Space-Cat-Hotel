@@ -32,9 +32,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Selectable")
 		FORCEINLINE bool GetCostRawToSpawn() { return CostRawToSpawn; }
 
-	UPROPERTY(EditDefaultsOnly, Category = "Selectable")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Selectable")
 		int32 CostOxygenToSpawn;
-	UPROPERTY(EditDefaultsOnly, Category = "Selectable")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Selectable")
 		int32 CostRawToSpawn;
 
 protected:

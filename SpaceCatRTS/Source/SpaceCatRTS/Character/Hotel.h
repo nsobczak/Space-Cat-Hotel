@@ -60,9 +60,9 @@ protected:
 
 	class ALevelSettings* LevelSettings;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Hotel")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Hotel")
 		int32 CostOxygenToAddRoom;
-	UPROPERTY(EditDefaultsOnly, Category = "Hotel")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Hotel")
 		int32 CostRawToAddRoom;
 
 	UPROPERTY(VisibleAnywhere, Category = "Hotel")
