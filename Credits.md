@@ -1,8 +1,5 @@
 # Credits
 
-- Used [_spacescape_](https://github.com/petrocket/spacescape) to create sky sphere texture
-- Cat paw downloaded from clker.com
-
 ## Fonts
 
 Downloaded from dafont.com
@@ -19,3 +16,8 @@ Downloaded from dafont.com
 - [Trippie Redd Type Space Pluck by OGKLeechy]( https://www.looperman.com/loops/detail/192088/trippie-redd-type-space-pluck-147bpm-ambient-synth-loop)
 - [Magic by Jairtheshadow ](https://www.looperman.com/loops/detail/190265/magic-130bpm-ambient-synth-loop)
 - [Lost in space by djkhaledsson]( https://www.looperman.com/loops/detail/188467/lost-in-space-153bpm-ambient-synth-loop)
+
+## Other
+
+- Used [_spacescape_](https://github.com/petrocket/spacescape) to create sky sphere texture
+- Cat paw texture for mouse cursor downloaded from clker.com

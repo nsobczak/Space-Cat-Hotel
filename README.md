@@ -11,7 +11,7 @@
 - An engineer can manage 2 room. So if a client needs 3 rooms, it will need at least 2 engineers in the hotel.
 - If there are already 2 engineers in the hotel, 3 rooms occupied and 1 free room, you need to construct 2 more rooms and recruit 1 extra engineer in that hotel.
 - If client keeps on waiting for too long it will leave.
-- if client are satisfied with your company they might come down to Earth, your mother planet.
+- If client are satisfied with your company they might come down to Earth, your mother planet.
 
 ## Resources
 
