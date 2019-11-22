@@ -1,14 +1,17 @@
 # README
 
-**Goal**: attract as much tourists as possible down to earth.
+**Goal**: You are a space cat who runs an interplanetary hotel company and wants to attract as many tourists as possible down to earth.
 
-- you are a space cat
-- you run an interplanetary hotel company
-- you must recruit space cat employees (worker: harvester or engineer)
-- harvester can gather resources
-- engineers can construct building that can answer extraterrestrial needs of clients
-- when clients arrive you must move them to their room: assign a room and they move to it if it answers its needs and if it's empty, otherwise client keeps on waiting, and leaving if it's too long.
-- if client are satisfied with your company they might come down to earth
+**How to** build and manage:
+- You must recruit fellow space cat employees (worker are either harvester or engineer)
+- Harvester can gather resources (oxygen and raw materials)
+- Engineers can construct facilities and work in hotels
+- Facilities are either mine to collect resources or hotel to answer clients' needs
+- Clients needs are displayed at the left hand corner. You must prepare the correct hotel with the right number of free rooms that are managed by the correct number of engineers.
+- An engineer can manage 2 room. So if a client needs 3 rooms, it will need at least 2 engineers in the hotel.
+- If there are already 2 engineers in the hotel, 3 rooms occupied and 1 free room, you need to construct 2 more rooms and recruit 1 extra engineer in that hotel.
+- If client keeps on waiting for too long it will leave.
+- if client are satisfied with your company they might come down to Earth, your mother planet.
 
 ## Resources
 
