@@ -47,7 +47,7 @@ public:
 		bool IsShowingWidget(EHudWidget widgetToLookFor);
 
 	UFUNCTION(BlueprintCallable, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
-		void ShowWidget(TSubclassOf<UUserWidget> NewWidgetClass, bool showCursor);
+		void ShowWidget(TSubclassOf<UUserWidget> NewWidgetClass, bool showCursor = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
 		void ShowHUDWidget();
@@ -62,10 +62,10 @@ public:
 		void ShowPauseWidget();
 
 	UFUNCTION(BlueprintCallable, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
-		void HideWidget(UUserWidget* widgetToHide, bool showCursor);
+		void HideWidget(UUserWidget* widgetToHide, bool showCursor = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Widget_Functions", Meta = (BlueprintProtected = "true"))
-		void HideCurrentWidget(bool showCursor);
+		void HideCurrentWidget(bool showCursor = false);
 #pragma endregion
 
 
