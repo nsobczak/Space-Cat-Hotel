@@ -13,14 +13,6 @@
 - If client keeps on waiting for too long it will leave.
 - If client are satisfied with your company they might come down to Earth, your mother planet.
 
-## Resources
-
-Type:
-- oxygen
-- raw materials
-
-They are gathered to Earth by harvesters.
-
 ## Actors
 
 - Earth => produces workers
@@ -35,7 +27,7 @@ They are gathered to Earth by harvesters.
 ## Game logic
 
 ### Setup
-Game should start with 1 mine on earth and a given number of Harvester worker working there.
+Game starts with 1 mine and a given number of Harvester worker working there.
 Fixed by the level:
 - Time limit
 - Number max of harvester workers
@@ -44,7 +36,47 @@ Fixed by the level:
 
 ### Update
 
-- Check game over = when timeleft == 0
-- Check if goal is completed == client satisfied
-- Update Resources amount
+- Check game over = when (timeleft == 0)
+- Check if goal is completed => client satisfied
+- Update resources amount
 - Check character's actions
+
+## Ideas
+
+- limit hotel room max capacity
+- engineer should take time building hotel and room in the same way that harvesters need time to harvest mine
+- mine should be limited to 1 harvester
+- do a tutorial
+- option menu should have: sound level + camera movement speed + graphics?
+- client appears at some point in the galaxy and player have to select it and click on hotel to assign a room to it, can't click on it if goal is missed, client just goes out and disappears.
+- outline actors when mouse is over selectable or facility emplacement (change outline color depending on what we hit?)
+- add temp texture/decal to right click location when moving
+- add stars appreciation on result screen depending on result
+- improve pathfinding
+- make facilities rotate with planets
+- make selected actor under turning square be a circle
+- make facility spawned with red transluscent material => delete it if we right click, fix position and change material to original when we left click on a possible position
+
+
+### levels
+- number: 20
+- they should give new gameplay
+- worm hole
+- moving planets (translating)
+- spaceships/satellite/planets crossing
+
+### goal queue
+- minimum and max number of goals active at the same time, 2 and 5 for instance
+- a timer is used to make a new goal appear, every 10 seconds for instance
+- timer is reset when a goal is completed or when a new goal appear
+- goal automatically appear if active goal count < min
+- timer is paused if active goal count >= max
+
+### Logos
+- oxygen
+- raw materials
+- engineer
+- harvester
+- earth
+- hotel
+- mine

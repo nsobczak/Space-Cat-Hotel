@@ -86,6 +86,8 @@ void AGMLevel::GameOver()
 {
 	if (ASpaceCatRTSPlayerController* pc = Cast<ASpaceCatRTSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
 	{
+		//TODO: set all remaining goals to missed
+
 		AHUDMain * currentHUD = Cast<AHUDMain>(pc->GetHUD());
 		if (currentHUD && !currentHUD->IsShowingWidget(EHudWidget::FHW_END))
 		{

@@ -40,6 +40,8 @@ protected:
 
 	static int32 MineCount;
 
+	//TODO: limit number of harvester to 1 per mine
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Mine")
 		EMineNature MNature;
 
