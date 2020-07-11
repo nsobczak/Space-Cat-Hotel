@@ -15,27 +15,24 @@ void AHUDMain::BeginPlay()
 
 	//hud
 	PlayerController = this->GetOwningPlayerController();
-	if (PlayerController)
+	if (WidgetToShow != EHudWidget::FHW_NONE)
 	{
-		if (WidgetToShow != EHudWidget::FHW_NONE)
+		switch (WidgetToShow)
 		{
-			switch (WidgetToShow)
-			{
-			case EHudWidget::FHW_START:
-				ShowStartingWidget();
-				break;
-			case EHudWidget::FHW_HUD:
-				ShowHUDWidget();
-				break;
-			case EHudWidget::FHW_PAUSE:
-				ShowPauseWidget();
-				break;
-			case EHudWidget::FHW_END:
-				ShowEndingWidget();
-				break;
-			default:
-				break;
-			}
+		case EHudWidget::FHW_START:
+			ShowStartingWidget();
+			break;
+		case EHudWidget::FHW_HUD:
+			ShowHUDWidget();
+			break;
+		case EHudWidget::FHW_PAUSE:
+			ShowPauseWidget();
+			break;
+		case EHudWidget::FHW_END:
+			ShowEndingWidget();
+			break;
+		default:
+			break;
 		}
 	}
 }
